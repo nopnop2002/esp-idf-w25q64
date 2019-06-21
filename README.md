@@ -1,5 +1,5 @@
 # esp-idf-w25q64
-SPI Flash Memory W25Q64 Access Library for esp-idf
+SPI Flash Memory W25Q64 Access Library for esp-idf.   
 I ported from here.   
 
 https://github.com/Tamakichi/Arduino-W25Q64
@@ -80,7 +80,7 @@ int16_t W25Q64_pageWrite(W25Q64_t * dev, uint16_t sect_no, uint16_t inaddr, uint
 |:-:|:-:|:-:|
 |VCC|--|3.3V|
 |GND|--|GND|
-|CS|--|Pin#24(*)|
+|CS|--|(*)|
 |MISI|--|GPIO12|
 |MOSI|--|GPIO13|
 |SCK|--|GPIO14|
@@ -93,7 +93,7 @@ int16_t W25Q64_pageWrite(W25Q64_t * dev, uint16_t sect_no, uint16_t inaddr, uint
 
 ![w25q64-1](https://user-images.githubusercontent.com/6020549/59921463-b1ae2380-9468-11e9-9353-0ba07faecfdd.jpg)
 
-JEDEC ID:  
+Manufacturer:  
 Byte1 : ManufacturerID(0xef=Winbond)  
 Byte2 : MemoryType(0x40=SPI/0x60=QPI)  
 Byte3 : Capacity(2^0x17=2^23=0x800000=8M Byte=64M Bit)  
