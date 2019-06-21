@@ -85,7 +85,7 @@ int16_t W25Q64_pageWrite(W25Q64_t * dev, uint16_t sect_no, uint16_t inaddr, uint
 |MOSI|--|GPIO13|
 |SCK|--|GPIO14|
 
-(*) You can change any pin using menuconfig.   
+(*) You can change any GPIO using menuconfig.   
 
 ---
 
