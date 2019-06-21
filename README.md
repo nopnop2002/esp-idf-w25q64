@@ -89,7 +89,7 @@ int16_t W25Q64_pageWrite(W25Q64_t * dev, uint16_t sect_no, uint16_t inaddr, uint
 
 ---
 
-# Output
+# Serial Console   
 
 ![w25q64-1](https://user-images.githubusercontent.com/6020549/59921463-b1ae2380-9468-11e9-9353-0ba07faecfdd.jpg)
 
