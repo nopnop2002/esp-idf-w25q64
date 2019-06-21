@@ -1,0 +1,12 @@
+menu "W25Q64 Configuration"
+
+    config CS_GPIO
+        int "Chip Select GPIO number"
+        range 0 34
+        default 15
+        help
+            GPIO number (IOxx) to Chip Select.
+            Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to CS.
+            GPIOs 35-39 are input-only so cannot be used as outputs.
+
+endmenu
