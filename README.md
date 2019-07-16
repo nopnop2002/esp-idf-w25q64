@@ -1,8 +1,6 @@
 # esp-idf-w25q64
 SPI Flash Memory W25Q64 Access Library for esp-idf.   
-I ported from here.   
-
-https://github.com/Tamakichi/Arduino-W25Q64
+I ported from [here](https://github.com/Tamakichi/Arduino-W25Q64).   
 
 ---
 
