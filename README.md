@@ -79,7 +79,7 @@ int16_t W25Q64_pageWrite(W25Q64_t * dev, uint16_t sect_no, uint16_t inaddr, uint
 |VCC|--|3.3V|
 |GND|--|GND|
 |CS|--|(*)|
-|MISI|--|GPIO12|
+|MISO|--|GPIO12|
 |MOSI|--|GPIO13|
 |SCK|--|GPIO14|
 
