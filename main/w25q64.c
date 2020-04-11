@@ -16,8 +16,8 @@ static const int GPIO_MISO = 12;
 static const int GPIO_MOSI = 13;
 static const int GPIO_SCLK = 14;
 
-static const int SPI_Command_Mode = 0;
-static const int SPI_Data_Mode = 1;
+//static const int SPI_Command_Mode = 0;
+//static const int SPI_Data_Mode = 1;
 static const int SPI_Frequency = 1000000;
 
 void W25Q64_dump(char *id, int ret, uint8_t *data, int len)
