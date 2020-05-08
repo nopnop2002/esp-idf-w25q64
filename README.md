@@ -142,3 +142,11 @@ Byte3 : Capacity(2^0x17=2^23=0x800000=8M Byte=64M Bit)
 - MX25L12835F   
 ![MX25L12835F](https://user-images.githubusercontent.com/6020549/81383590-353d3580-914b-11ea-913d-ce862c58c36c.jpg)
 
+---
+
+# Note   
+I tested these.   
+But I couldn't get it working.   
+- GD25Q64   
+- SST25VF016B   
+- SST25VF032B   
