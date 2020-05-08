@@ -114,7 +114,7 @@ Next 32Byte : ASCII A-Z
 ![W25Q80](https://user-images.githubusercontent.com/6020549/81382267-1342b380-9149-11ea-88bc-bc7cd07501a4.jpg)
 
 - W25Q16   
-![W25Q16](https://user-images.githubusercontent.com/6020549/81382295-1f2e7580-9149-11ea-98e7-b73a3d19ae12.jpg)
+![W25Q16](https://user-images.githubusercontent.com/6020549/81403592-b6f28a80-916e-11ea-92ef-1bbac7b79e15.jpg)
 
 - W25Q32   
 ![W25Q32](https://user-images.githubusercontent.com/6020549/81382304-22296600-9149-11ea-8cbe-8da89123539a.jpg)
