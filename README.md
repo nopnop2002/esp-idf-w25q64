@@ -28,10 +28,10 @@ void spi_master_init(W25Q64_t * dev, int GPIO_CS);
 // Get status register1  
 esp_err_t W25Q64_readStatusReg1(W25Q64_t * dev, uint8_t * reg1);  
 
-// Get status register2  
+// Get status register2(Winbond only)  
 esp_err_t W25Q64_readStatusReg2(W25Q64_t * dev, uint8_t * reg2);  
 
-// Get Unique ID  
+// Get Unique ID(Winbond only)  
 esp_err_t W25Q64_readUniqieID(W25Q64_t * dev, uint8_t * id);  
 
 // Get JEDEC ID(Manufacture, Memory Type,Capacity)  
