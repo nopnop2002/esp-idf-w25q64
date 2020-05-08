@@ -74,14 +74,16 @@ int16_t W25Q64_pageWrite(W25Q64_t * dev, uint16_t sect_no, uint16_t inaddr, uint
 
 # Wireing  
 
-|W25Q64||ESP32|
-|:-:|:-:|:-:|
-|VCC|--|3.3V|
-|GND|--|GND|
-|CS|--|(*)|
-|MISO|--|GPIO12|
-|MOSI|--|GPIO13|
-|SCK|--|GPIO14|
+|#|W25Q64||ESP32|
+|:-:|:-:|:-:|:-:|
+|1|/CS|--|(*)|
+|2|MISO|--|GPIO12|
+|3|/WP|--|3.3V|
+|4|GND|--|GND|
+|5|MOSI|--|GPIO13|
+|6|SCK|--|GPIO14|
+|7|/HOLD|--|3.3V|
+|8|VCC|--|3.3V|
 
 (*) You can change any GPIO using menuconfig.   
 
