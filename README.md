@@ -131,7 +131,7 @@ Next 32Byte : ASCII A-Z
 |MX25L6473E|0x7FFFFF|2048|256|128|
 |MX25L12835F|0xFFFFFF|4096|512|256|
 
-- MX25L6473E
+- MX25L6473E   
 ![MX25L6473E](https://user-images.githubusercontent.com/6020549/81383580-32dadb80-914b-11ea-823b-6487b7a7e073.jpg)
 
 Manufacturer:  
@@ -139,6 +139,6 @@ Byte1 : ManufacturerID(0xc2=Macronix)
 Byte2 : MemoryType(0x20)  
 Byte3 : Capacity(2^0x17=2^23=0x800000=8M Byte=64M Bit)  
 
-- MX25L12835F
+- MX25L12835F   
 ![MX25L12835F](https://user-images.githubusercontent.com/6020549/81383590-353d3580-914b-11ea-913d-ce862c58c36c.jpg)
 
