@@ -107,21 +107,21 @@ esp_err_t W25Q64_readStatusReg2(W25Q64_t * dev, uint8_t * reg2)
 
 //
 // Unique IDの取得
-// id(out):Unique ID 7バイトを返す  
+// id(out):Unique ID 8バイトを返す  
 //
 esp_err_t W25Q64_readUniqieID(W25Q64_t * dev, uint8_t * id)
 {
 	spi_transaction_t SPITransaction;
-	uint8_t data[12];
+	uint8_t data[13];
 	data[0] = CMD_READ_UNIQUE_ID;
 	memset( &SPITransaction, 0, sizeof( spi_transaction_t ) );
-	SPITransaction.length = 12 * 8;
+	SPITransaction.length = 13 * 8;
 	SPITransaction.tx_buffer = data;
 	SPITransaction.rx_buffer = data;
 	esp_err_t ret = spi_device_transmit( dev->_SPIHandle, &SPITransaction );
 	assert(ret==ESP_OK);
-	if(_DEBUG_)W25Q64_dump("readUniqieID", ret, data, 12);
-	memcpy(id, &data[5], 7);
+	if(_DEBUG_)W25Q64_dump("readUniqieID", ret, data, 13);
+	memcpy(id, &data[5], 8);
 	return ret ;
 }
 

@@ -92,14 +92,14 @@ void app_main()
 
 	// Unique IDの取得テスト
 	// Get Unique ID
-	uint8_t uid[7];
+	uint8_t uid[8];
 	ret = W25Q64_readUniqieID(&dev, uid);
 	if (ret != ESP_OK) {
 		ESP_LOGE(tag, "readUniqieID fail %d",ret);
 		while(1) { vTaskDelay(1); }
 	}
-	ESP_LOGI(tag, "readUniqieID : %x-%x-%x-%x-%x-%x-%x",
-		 uid[0], uid[1], uid[2], uid[3], uid[4], uid[5], uid[6]);
+	ESP_LOGI(tag, "readUniqieID : %x-%x-%x-%x-%x-%x-%x-%x",
+		 uid[0], uid[1], uid[2], uid[3], uid[4], uid[5], uid[6], uid[7]);
 
 	// JEDEC IDの取得テスト
 	// Get JEDEC ID

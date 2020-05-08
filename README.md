@@ -89,9 +89,18 @@ int16_t W25Q64_pageWrite(W25Q64_t * dev, uint16_t sect_no, uint16_t inaddr, uint
 
 ---
 
-# Serial Console   
+# Winbond
 
-![w25q64-1](https://user-images.githubusercontent.com/6020549/59921463-b1ae2380-9468-11e9-9353-0ba07faecfdd.jpg)
+|Device|Address range|Number of 4K-Sectors|Number of 32K-Blocks|Number of 64K-Blocks|
+|:---|:---|:---|:---|:---|
+|W25Q80|0x0FFFFF|256|32|16|
+|W25Q16|0x1FFFFF|512|64|32|
+|W25Q32|0x3FFFFF|1024|128|64|
+|W25Q64|0x7FFFFF|2048|256|128|
+|W25Q128|0xFFFFFF|4096|512|256|
+
+- W24Q64   
+![W25Q64](https://user-images.githubusercontent.com/6020549/81382272-16d63a80-9149-11ea-90b3-aef92642914f.jpg)
 
 Manufacturer:  
 Byte1 : ManufacturerID(0xef=Winbond)  
@@ -101,4 +110,15 @@ Byte3 : Capacity(2^0x17=2^23=0x800000=8M Byte=64M Bit)
 First 10Byte : ASCII 0-9  
 Next 32Byte : ASCII A-Z  
 
+- W25Q80   
+![W25Q80](https://user-images.githubusercontent.com/6020549/81382267-1342b380-9149-11ea-88bc-bc7cd07501a4.jpg)
+
+- W25Q16   
+![W25Q16](https://user-images.githubusercontent.com/6020549/81382295-1f2e7580-9149-11ea-98e7-b73a3d19ae12.jpg)
+
+- W25Q32   
+![W25Q32](https://user-images.githubusercontent.com/6020549/81382304-22296600-9149-11ea-8cbe-8da89123539a.jpg)
+
+- W25Q128   
+![W25Q128](https://user-images.githubusercontent.com/6020549/81382327-2c4b6480-9149-11ea-8b34-dcbd6e43aa37.jpg)
 
