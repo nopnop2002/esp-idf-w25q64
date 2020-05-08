@@ -122,3 +122,23 @@ Next 32Byte : ASCII A-Z
 - W25Q128   
 ![W25Q128](https://user-images.githubusercontent.com/6020549/81382327-2c4b6480-9149-11ea-8b34-dcbd6e43aa37.jpg)
 
+---
+
+# MACRONIX   
+
+|Device|Address range|Number of 4K-Sectors|Number of 32K-Blocks|Number of 64K-Blocks|
+|:---|:---|:---|:---|:---|
+|MX25L6473E|0x7FFFFF|2048|256|128|
+|MX25L12835F|0xFFFFFF|4096|512|256|
+
+- MX25L6473E
+![MX25L6473E](https://user-images.githubusercontent.com/6020549/81383580-32dadb80-914b-11ea-823b-6487b7a7e073.jpg)
+
+Manufacturer:  
+Byte1 : ManufacturerID(0xc2=Macronix)  
+Byte2 : MemoryType(0x20)  
+Byte3 : Capacity(2^0x17=2^23=0x800000=8M Byte=64M Bit)  
+
+- MX25L12835F
+![MX25L12835F](https://user-images.githubusercontent.com/6020549/81383590-353d3580-914b-11ea-913d-ce862c58c36c.jpg)
+
