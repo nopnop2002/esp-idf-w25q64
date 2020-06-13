@@ -76,7 +76,7 @@ int16_t W25Q64_pageWrite(W25Q64_t * dev, uint16_t sect_no, uint16_t inaddr, uint
 
 |#|W25Q64||ESP32|
 |:-:|:-:|:-:|:-:|
-|1|/CS|--|(*)|
+|1|/CS|--|GPIO15(*)|
 |2|MISO|--|GPIO12|
 |3|/WP|--|3.3V|
 |4|GND|--|GND|
@@ -91,13 +91,13 @@ int16_t W25Q64_pageWrite(W25Q64_t * dev, uint16_t sect_no, uint16_t inaddr, uint
 
 # Winbond
 
-|Device|Address range|Number of 4K-Sectors|Number of 32K-Blocks|Number of 64K-Blocks|
-|:---|:---|:---|:---|:---|
-|W25Q80|0x0FFFFF|256|32|16|
-|W25Q16|0x1FFFFF|512|64|32|
-|W25Q32|0x3FFFFF|1024|128|64|
-|W25Q64|0x7FFFFF|2048|256|128|
-|W25Q128|0xFFFFFF|4096|512|256|
+|Device|# of Bytes|Address range|# of 4K-Sectors|# of 32K-Blocks|# of 64K-Blocks|
+|:---|:---|:---|:---|:---|:---|
+|W25Q80|1M|0x0FFFFF|256|32|16|
+|W25Q16|2M|0x1FFFFF|512|64|32|
+|W25Q32|4M|0x3FFFFF|1024|128|64|
+|W25Q64|8M|0x7FFFFF|2048|256|128|
+|W25Q128|16M|0xFFFFFF|4096|512|256|
 
 - W24Q64   
 ![W25Q64](https://user-images.githubusercontent.com/6020549/81382272-16d63a80-9149-11ea-90b3-aef92642914f.jpg)
@@ -126,10 +126,10 @@ Next 32Byte : ASCII A-Z
 
 # MACRONIX   
 
-|Device|Address range|Number of 4K-Sectors|Number of 32K-Blocks|Number of 64K-Blocks|
-|:---|:---|:---|:---|:---|
-|MX25L6473E|0x7FFFFF|2048|256|128|
-|MX25L12835F|0xFFFFFF|4096|512|256|
+|Device|# of Bytes|Address range|# of 4K-Sectors|# of 32K-Blocks|# of 64K-Blocks|
+|:---|:---|:---|:---|:---|:---|
+|MX25L6473E|8M|0x7FFFFF|2048|256|128|
+|MX25L12835F|16M|0xFFFFFF|4096|512|256|
 
 - MX25L6473E   
 ![MX25L6473E](https://user-images.githubusercontent.com/6020549/81383580-32dadb80-914b-11ea-823b-6487b7a7e073.jpg)
