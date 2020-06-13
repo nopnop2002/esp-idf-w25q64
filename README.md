@@ -128,16 +128,20 @@ Next 32Byte : ASCII A-Z
 
 |Device|# of Bytes|Address range|# of 4K-Sectors|# of 32K-Blocks|# of 64K-Blocks|JEDEC ID|
 |:---|:---|:---|:---|:---|:---|:---|
+|MX25L3206E|4M|0x3FFFFF|1024|128|64|C2-20-16|
 |MX25L6473E|8M|0x7FFFFF|2048|256|128|C2-20-17|
 |MX25L12835F|16M|0xFFFFFF|4096|512|256|C2-20-18|
 
-- MX25L6473E   
-![MX25L6473E](https://user-images.githubusercontent.com/6020549/81383580-32dadb80-914b-11ea-823b-6487b7a7e073.jpg)
+- MX25L3206E
+![MX25L3206E](https://user-images.githubusercontent.com/6020549/84555332-47685000-ad57-11ea-81a1-db88de013da9.jpg)
 
 Manufacturer:  
 Byte1 : ManufacturerID(0xc2=Macronix)  
 Byte2 : MemoryType(0x20)  
-Byte3 : Capacity(2^0x17=2^23=0x800000=8M Byte=64M Bit)  
+Byte3 : Capacity(2^0x16=2^22=0x400000=4M Byte=32M Bit)  
+
+- MX25L6473E   
+![MX25L6473E](https://user-images.githubusercontent.com/6020549/81383580-32dadb80-914b-11ea-823b-6487b7a7e073.jpg)
 
 - MX25L12835F   
 ![MX25L12835F](https://user-images.githubusercontent.com/6020549/81383590-353d3580-914b-11ea-913d-ce862c58c36c.jpg)
