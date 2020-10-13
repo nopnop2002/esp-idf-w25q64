@@ -143,7 +143,7 @@ void app_main()
 
 	// データ書き込みテスト
 	// Write data to Sector=0 Address=10
-	uint8_t wdata[16];    // 書込みデータ
+	uint8_t wdata[26];    // 書込みデータ
 	for (int i=0; i<26; i++) {
 		wdata[i]='A'+i; // A-Z     
 	}  
