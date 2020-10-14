@@ -18,10 +18,10 @@ make flash
 
 ![config-1](https://user-images.githubusercontent.com/6020549/96056689-39236f80-0ec2-11eb-9d1d-a3710d8fb2e3.jpg)
 
-- Select SPI2   
+Select SPI2   
 ![config-2](https://user-images.githubusercontent.com/6020549/96056699-3b85c980-0ec2-11eb-99a6-819c5fe8de9f.jpg)
 
-- Select SPI3   
+Select SPI3   
 ![config-3](https://user-images.githubusercontent.com/6020549/96056704-3d4f8d00-0ec2-11eb-9ac9-03aba3aa7f37.jpg)
 
 ---
