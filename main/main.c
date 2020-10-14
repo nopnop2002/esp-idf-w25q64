@@ -10,8 +10,16 @@
 #include "esp_log.h"
 
 // You have to set these CONFIG value using menuconfig.
-#if 0
-#define CONFIG_CS_GPIO	15
+#if CONFIG_SPI2
+static const int GPIO_MISO = 12;
+static const int GPIO_MOSI = 13;
+static const int GPIO_SCLK = 14;
+#endif
+
+#if CONFIG_SPI3
+static const int GPIO_MISO = 19;
+static const int GPIO_MOSI = 23;
+static const int GPIO_SCLK = 18;
 #endif
 
 #include "w25q64.h"
@@ -65,9 +73,9 @@ void dump(uint8_t *dt, int n)
 
 void app_main()
 {
-	ESP_LOGI(tag, "CONFIG_CS_GPIO=%d", CONFIG_CS_GPIO);
+	ESP_LOGI(tag, "CONFIG_GPIO_CS=%d", CONFIG_GPIO_CS);
 	W25Q64_t dev;
-	spi_master_init(&dev, CONFIG_CS_GPIO);
+	spi_master_init(&dev, CONFIG_GPIO_CS, GPIO_MISO, GPIO_MOSI, GPIO_SCLK);
 
 	// ステータスレジスタ1の取得
 	// Get fron Status Register1

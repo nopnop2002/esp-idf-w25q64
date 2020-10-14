@@ -46,7 +46,7 @@ typedef struct {
 
 
 void Dump(char *id, int ret, uint8_t *data, int len);
-void spi_master_init(W25Q64_t * dev, int GPIO_CS);
+void spi_master_init(W25Q64_t * dev, int GPIO_CS, int GPIO_MOSI, int GPIO_MISO, int GPIO_SCLK);
 esp_err_t W25Q64_readStatusReg1(W25Q64_t * dev, uint8_t * reg1);
 esp_err_t W25Q64_readStatusReg2(W25Q64_t * dev, uint8_t * reg2);
 esp_err_t W25Q64_readUniqieID(W25Q64_t * dev, uint8_t * id);

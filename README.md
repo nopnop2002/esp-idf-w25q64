@@ -15,8 +15,9 @@ make menuconfig
 make flash
 ```
 
-![config-1](https://user-images.githubusercontent.com/6020549/59921481-bd014f00-9468-11e9-9e7a-0f2c74c8cca5.jpg)
-![config-2](https://user-images.githubusercontent.com/6020549/59921484-becb1280-9468-11e9-994b-9b9e1e9edae6.jpg)
+![config-1](https://user-images.githubusercontent.com/6020549/96056689-39236f80-0ec2-11eb-9d1d-a3710d8fb2e3.jpg)
+![config-2](https://user-images.githubusercontent.com/6020549/96056699-3b85c980-0ec2-11eb-99a6-819c5fe8de9f.jpg)
+![config-3](https://user-images.githubusercontent.com/6020549/96056704-3d4f8d00-0ec2-11eb-9ac9-03aba3aa7f37.jpg)
 
 ---
 
@@ -74,16 +75,16 @@ int16_t W25Q64_pageWrite(W25Q64_t * dev, uint16_t sect_no, uint16_t inaddr, uint
 
 # Wireing  
 
-|#|W25Q64||ESP32|
-|:-:|:-:|:-:|:-:|
-|1|/CS|--|GPIO15(*)|
-|2|MISO|--|GPIO12|
-|3|/WP|--|3.3V|
-|4|GND|--|GND|
-|5|MOSI|--|GPIO13|
-|6|SCK|--|GPIO14|
-|7|/HOLD|--|3.3V|
-|8|VCC|--|3.3V|
+|#|W25Q64||ESP32(SPI2)|ESP32(SPI3)
+|:-:|:-:|:-:|:-:|:-:|
+|1|/CS|--|GPIO15(*)|GPIO5(*)|
+|2|MISO|--|GPIO12|GPIO19|
+|3|/WP|--|3.3V|3.3V|
+|4|GND|--|GND|GND|
+|5|MOSI|--|GPIO13|GPIO23|
+|6|SCK|--|GPIO14|GPIO18|
+|7|/HOLD|--|3.3V|3.3V|
+|8|VCC|--|3.3V|3.3V|
 
 (*) You can change any GPIO using menuconfig.   
 

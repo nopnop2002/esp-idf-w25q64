@@ -1,12 +1,29 @@
 menu "W25Q64 Configuration"
 
-    config CS_GPIO
-        int "Chip Select GPIO number"
-        range 0 34
-        default 15
-        help
-            GPIO number (IOxx) to Chip Select.
-            Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to CS.
-            GPIOs 35-39 are input-only so cannot be used as outputs.
+	choice SPI
+		prompt "SPI BUS"
+		default SPI2
+		help
+			Select SPI BUS.
+		config SPI2
+			bool "SPI2"
+			help
+				SPI BUS is SPI2.
+				SCLK GPIO14. MISO GPIO12. MOSI GPIO13.
+		config SPI3
+			bool "SPI3"
+			help
+				SPI BUS is SPI3.
+				SCLK GPIO18. MISO GPIO19. MOSI GPIO23.
+	endchoice
+
+	config GPIO_CS
+		int "Chip Select GPIO number"
+		range 0 34
+		default 15
+		help
+			GPIO number (IOxx) to Chip Select.
+			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to CS.
+			GPIOs 35-39 are input-only so cannot be used as outputs.
 
 endmenu
