@@ -6,7 +6,8 @@ I ported from [here](https://github.com/Tamakichi/Arduino-W25Q64).
 
 # CONFIG
 You have to set this config value with menuconfig.   
-CONFIG_CS_GPIO   
+- CONFIG_SPI
+- CONFIG_GPIO_CS   
 
 ```
 git clone https://github.com/nopnop2002/esp-idf-w25q64
