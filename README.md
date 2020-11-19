@@ -2,12 +2,7 @@
 SPI Flash Memory W25Q64 Access Library for esp-idf.   
 I ported from [here](https://github.com/Tamakichi/Arduino-W25Q64).   
 
----
-
-# CONFIG
-You have to set this config value with menuconfig.   
-- CONFIG_SPI
-- CONFIG_GPIO_CS   
+# Installation
 
 ```
 git clone https://github.com/nopnop2002/esp-idf-w25q64
@@ -15,6 +10,10 @@ cd esp-idf-w25q64
 make menuconfig
 make flash
 ```
+
+You have to set this config value with menuconfig.   
+- CONFIG_SPI
+- CONFIG_GPIO_CS   
 
 ![config-1](https://user-images.githubusercontent.com/6020549/96056689-39236f80-0ec2-11eb-9d1d-a3710d8fb2e3.jpg)
 
