@@ -28,17 +28,17 @@ menu "W25Q64 Configuration"
 		default 12
 		help
 			GPIO number (IOxx) to SPI MISO.
-			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to DC.
+			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to MISO.
 			GPIOs 35-39 are input-only so cannot be used as outputs.
 
 	config MOSI_GPIO
 		depends on CUSTOM_SPI
 		int "MOSI GPIO number"
-		range 0 46
+		range 0 34
 		default 13
 		help
 			GPIO number (IOxx) to SPI MOSI.
-			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to DC.
+			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to MOSI.
 			GPIOs 35-39 are input-only so cannot be used as outputs.
 
 	config SCLK_GPIO
@@ -48,7 +48,7 @@ menu "W25Q64 Configuration"
 		default 14
 		help
 			GPIO number (IOxx) to SPI SCLK.
-			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to DC.
+			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to SCLK.
 			GPIOs 35-39 are input-only so cannot be used as outputs.
 
 	config CS_GPIO
