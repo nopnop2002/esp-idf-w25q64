@@ -18,7 +18,7 @@ You have to set this config value with menuconfig.
 ![config-1](https://user-images.githubusercontent.com/6020549/96056689-39236f80-0ec2-11eb-9d1d-a3710d8fb2e3.jpg)
 
 Select SPI2   
-![config-2](https://user-images.githubusercontent.com/6020549/96056699-3b85c980-0ec2-11eb-99a6-819c5fe8de9f.jpg)
+![config-2](https://user-images.githubusercontent.com/6020549/102707808-73095b80-42e1-11eb-835a-21c888853ed9.jpg)
 
 Select SPI3   
 ![config-3](https://user-images.githubusercontent.com/6020549/102706256-a644ee00-42d3-11eb-97c0-92560605bf9d.jpg)
