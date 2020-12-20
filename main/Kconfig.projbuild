@@ -1,6 +1,6 @@
 menu "W25Q64 Configuration"
 
-	choice SPI
+	choice SPI_BUS
 		prompt "SPI BUS"
 		default SPI2
 		help
@@ -15,14 +15,48 @@ menu "W25Q64 Configuration"
 			help
 				SPI BUS is SPI3.
 				SCLK GPIO18. MISO GPIO19. MOSI GPIO23.
+		config CUSTOM_SPI
+			bool "CUSTOM"
+			help
+				SPI BUS is CUSTOM.
 	endchoice
 
-	config GPIO_CS
-		int "Chip Select GPIO number"
+	config MISO_GPIO
+		depends on CUSTOM_SPI
+		int "MISO GPIO number"
+		range 0 34
+		default 12
+		help
+			GPIO number (IOxx) to SPI MISO.
+			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to DC.
+			GPIOs 35-39 are input-only so cannot be used as outputs.
+
+	config MOSI_GPIO
+		depends on CUSTOM_SPI
+		int "MOSI GPIO number"
+		range 0 46
+		default 13
+		help
+			GPIO number (IOxx) to SPI MOSI.
+			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to DC.
+			GPIOs 35-39 are input-only so cannot be used as outputs.
+
+	config SCLK_GPIO
+		depends on CUSTOM_SPI
+		int "SCLK GPIO number"
+		range 0 34
+		default 14
+		help
+			GPIO number (IOxx) to SPI SCLK.
+			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to DC.
+			GPIOs 35-39 are input-only so cannot be used as outputs.
+
+	config CS_GPIO
+		int "CS GPIO number"
 		range 0 34
 		default 15
 		help
-			GPIO number (IOxx) to Chip Select.
+			GPIO number (IOxx) to SPI CS.
 			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to CS.
 			GPIOs 35-39 are input-only so cannot be used as outputs.
 

@@ -8,12 +8,12 @@ I ported from [here](https://github.com/Tamakichi/Arduino-W25Q64).
 git clone https://github.com/nopnop2002/esp-idf-w25q64
 cd esp-idf-w25q64
 make menuconfig
-make flash
+make flash monitor
 ```
 
 You have to set this config value with menuconfig.   
 - CONFIG_SPI
-- CONFIG_GPIO_CS   
+- CONFIG_CS_GPIO   
 
 ![config-1](https://user-images.githubusercontent.com/6020549/96056689-39236f80-0ec2-11eb-9d1d-a3710d8fb2e3.jpg)
 
@@ -22,6 +22,9 @@ Select SPI2
 
 Select SPI3   
 ![config-3](https://user-images.githubusercontent.com/6020549/96056704-3d4f8d00-0ec2-11eb-9ac9-03aba3aa7f37.jpg)
+
+Select CUSTOM   
+![config-4](https://user-images.githubusercontent.com/6020549/102706064-ed31e400-42d1-11eb-859b-bfb5ce9d07f4.jpg)
 
 ---
 
@@ -79,16 +82,16 @@ int16_t W25Q64_pageWrite(W25Q64_t * dev, uint16_t sect_no, uint16_t inaddr, uint
 
 # Wireing  
 
-|#|W25Q64||ESP32(SPI2)|ESP32(SPI3)
-|:-:|:-:|:-:|:-:|:-:|
-|1|/CS|--|GPIO15(*)|GPIO5(*)|
-|2|MISO|--|GPIO12|GPIO19|
-|3|/WP|--|3.3V|3.3V|
-|4|GND|--|GND|GND|
-|5|MOSI|--|GPIO13|GPIO23|
-|6|SCK|--|GPIO14|GPIO18|
-|7|/HOLD|--|3.3V|3.3V|
-|8|VCC|--|3.3V|3.3V|
+|#|W25Q64||ESP32(SPI2)|ESP32(SPI3)|ESP32(CUSTOM)|
+|:-:|:-:|:-:|:-:|:-:|:-:|
+|1|/CS|--|GPIO15(*)|GPIO15(*)|GPIO15(*)|
+|2|MISO|--|GPIO12|GPIO19|GPIO12(*)|
+|3|/WP|--|3.3V|3.3V|3.3V|
+|4|GND|--|GND|GND|GND|
+|5|MOSI|--|GPIO13|GPIO23|GPIO13(*)|
+|6|SCK|--|GPIO14|GPIO18|GPIO14(*)|
+|7|/HOLD|--|3.3V|3.3V|3.3V|
+|8|VCC|--|3.3V|3.3V|3.3V|
 
 (*) You can change any GPIO using menuconfig.   
 

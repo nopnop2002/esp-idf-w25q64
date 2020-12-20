@@ -11,15 +11,21 @@
 
 // You have to set these CONFIG value using menuconfig.
 #if CONFIG_SPI2
-static const int GPIO_MISO = 12;
-static const int GPIO_MOSI = 13;
-static const int GPIO_SCLK = 14;
+static const int MISO_GPIO = 12;
+static const int MOSI_GPIO = 13;
+static const int SCLK_GPIO = 14;
 #endif
 
 #if CONFIG_SPI3
-static const int GPIO_MISO = 19;
-static const int GPIO_MOSI = 23;
-static const int GPIO_SCLK = 18;
+static const int MISO_GPIO = 19;
+static const int MOSI_GPIO = 23;
+static const int SCLK_GPIO = 18;
+#endif
+
+#if CONFIG_CUSTOM_SPI
+static const int MISO_GPIO = CONFIG_MISO_GPIO;
+static const int MOSI_GPIO = CONFIG_MOSI_GPIO;
+static const int SCLK_GPIO = CONFIG_SCLK_GPIO;
 #endif
 
 #include "w25q64.h"
@@ -73,9 +79,12 @@ void dump(uint8_t *dt, int n)
 
 void app_main()
 {
-	ESP_LOGI(tag, "CONFIG_GPIO_CS=%d", CONFIG_GPIO_CS);
+	ESP_LOGI(tag, "MISO_GPIO=%d", MISO_GPIO);
+	ESP_LOGI(tag, "MOSI_GPIO=%d", MOSI_GPIO);
+	ESP_LOGI(tag, "SCLK_GPIO=%d", SCLK_GPIO);
+	ESP_LOGI(tag, "CS_GPIO=%d", CONFIG_CS_GPIO);
 	W25Q64_t dev;
-	spi_master_init(&dev, CONFIG_GPIO_CS, GPIO_MISO, GPIO_MOSI, GPIO_SCLK);
+	spi_master_init(&dev, CONFIG_CS_GPIO, MISO_GPIO, MOSI_GPIO, SCLK_GPIO);
 
 	// ステータスレジスタ1の取得
 	// Get fron Status Register1
