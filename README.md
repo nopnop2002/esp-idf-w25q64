@@ -21,7 +21,7 @@ Select SPI2
 ![config-2](https://user-images.githubusercontent.com/6020549/96056699-3b85c980-0ec2-11eb-99a6-819c5fe8de9f.jpg)
 
 Select SPI3   
-![config-3](https://user-images.githubusercontent.com/6020549/96056704-3d4f8d00-0ec2-11eb-9ac9-03aba3aa7f37.jpg)
+![config-3](https://user-images.githubusercontent.com/6020549/102706256-a644ee00-42d3-11eb-97c0-92560605bf9d.jpg)
 
 Select CUSTOM   
 ![config-4](https://user-images.githubusercontent.com/6020549/102706064-ed31e400-42d1-11eb-859b-bfb5ce9d07f4.jpg)
