@@ -247,9 +247,9 @@ uint16_t W25Q64_read(W25Q64_t * dev, uint32_t addr, uint8_t *buf, uint16_t n)
 	SPITransaction.rx_buffer = data;
 	esp_err_t ret = spi_device_transmit( dev->_SPIHandle, &SPITransaction );
 	assert(ret==ESP_OK);
+	memcpy(buf, &data[4], n);
 	free(data);
 	if (ret != ESP_OK) return 0;
-	memcpy(buf, &data[4], n);
 	return n;
 }
 
@@ -274,9 +274,9 @@ uint16_t W25Q64_fastread(W25Q64_t * dev, uint32_t addr, uint8_t *buf, uint16_t n
 	SPITransaction.rx_buffer = data;
 	esp_err_t ret = spi_device_transmit( dev->_SPIHandle, &SPITransaction );
 	assert(ret==ESP_OK);
+	memcpy(buf, &data[5], n);
 	free(data);
 	if (ret != ESP_OK) return 0;
-	memcpy(buf, &data[5], n);
 	return n;
 }
 
