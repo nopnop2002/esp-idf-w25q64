@@ -107,26 +107,26 @@ int16_t W25Q64_pageWrite(W25Q64_t * dev, uint16_t sect_no, uint16_t inaddr, uint
 |W25Q64|8M|0x7FFFFF|2048|256|128|EF-40-17|
 |W25Q128|16M|0xFFFFFF|4096|512|256|EF-40-18|
 
-- W25Q80   
+## W25Q80   
 ![W25Q80](https://user-images.githubusercontent.com/6020549/81382267-1342b380-9149-11ea-88bc-bc7cd07501a4.jpg)
 
- - Manufacturer:  
-  Byte1 : ManufacturerID(0xef=Winbond)  
-  Byte2 : MemoryType(0x40=SPI/0x60=QPI)  
-  Byte3 : Capacity(2^0x14=2^20=0x100000=1M Byte=8M Bit)  
- - First 10Byte : ASCII 0-9  
- - Next 32Byte : ASCII A-Z  
+- Manufacturer:  
+ Byte1 : ManufacturerID(0xef=Winbond)  
+ Byte2 : MemoryType(0x40=SPI/0x60=QPI)  
+ Byte3 : Capacity(2^0x14=2^20=0x100000=1M Byte=8M Bit)  
+- First 10Byte : ASCII 0-9  
+- Next 32Byte : ASCII A-Z  
 
-- W25Q16   
+## W25Q16   
 ![W25Q16](https://user-images.githubusercontent.com/6020549/81403592-b6f28a80-916e-11ea-92ef-1bbac7b79e15.jpg)
 
-- W25Q32   
+## W25Q32   
 ![W25Q32](https://user-images.githubusercontent.com/6020549/81382304-22296600-9149-11ea-8cbe-8da89123539a.jpg)
 
-- W24Q64   
+## W24Q64   
 ![W25Q64](https://user-images.githubusercontent.com/6020549/81382272-16d63a80-9149-11ea-90b3-aef92642914f.jpg)
 
-- W25Q128   
+## W25Q128   
 ![W25Q128](https://user-images.githubusercontent.com/6020549/81382327-2c4b6480-9149-11ea-8b34-dcbd6e43aa37.jpg)
 
 ---
@@ -139,18 +139,18 @@ int16_t W25Q64_pageWrite(W25Q64_t * dev, uint16_t sect_no, uint16_t inaddr, uint
 |MX25L6473E|8M|0x7FFFFF|2048|256|128|C2-20-17|
 |MX25L12835F|16M|0xFFFFFF|4096|512|256|C2-20-18|
 
-- MX25L3206E   
+## MX25L3206E   
 ![MX25L3206E](https://user-images.githubusercontent.com/6020549/84555332-47685000-ad57-11ea-81a1-db88de013da9.jpg)
 
-Manufacturer:  
-Byte1 : ManufacturerID(0xc2=Macronix)  
-Byte2 : MemoryType(0x20)  
-Byte3 : Capacity(2^0x16=2^22=0x400000=4M Byte=32M Bit)  
+- Manufacturer:  
+ Byte1 : ManufacturerID(0xc2=Macronix)  
+ Byte2 : MemoryType(0x20)  
+ Byte3 : Capacity(2^0x16=2^22=0x400000=4M Byte=32M Bit)  
 
-- MX25L6473E   
+## MX25L6473E   
 ![MX25L6473E](https://user-images.githubusercontent.com/6020549/81383580-32dadb80-914b-11ea-823b-6487b7a7e073.jpg)
 
-- MX25L12835F   
+## MX25L12835F   
 ![MX25L12835F](https://user-images.githubusercontent.com/6020549/81383590-353d3580-914b-11ea-913d-ce862c58c36c.jpg)
 
 ---
