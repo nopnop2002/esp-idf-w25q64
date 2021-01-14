@@ -110,13 +110,12 @@ int16_t W25Q64_pageWrite(W25Q64_t * dev, uint16_t sect_no, uint16_t inaddr, uint
 - W25Q80   
 ![W25Q80](https://user-images.githubusercontent.com/6020549/81382267-1342b380-9149-11ea-88bc-bc7cd07501a4.jpg)
 
- Manufacturer:  
- Byte1 : ManufacturerID(0xef=Winbond)  
- Byte2 : MemoryType(0x40=SPI/0x60=QPI)  
- Byte3 : Capacity(2^0x14=2^20=0x100000=1M Byte=8M Bit)  
- First 10Byte : ASCII 0-9  
- Next 32Byte : ASCII A-Z  
-
+ - Manufacturer:  
+  Byte1 : ManufacturerID(0xef=Winbond)  
+  Byte2 : MemoryType(0x40=SPI/0x60=QPI)  
+  Byte3 : Capacity(2^0x14=2^20=0x100000=1M Byte=8M Bit)  
+ - First 10Byte : ASCII 0-9  
+ - Next 32Byte : ASCII A-Z  
 
 - W25Q16   
 ![W25Q16](https://user-images.githubusercontent.com/6020549/81403592-b6f28a80-916e-11ea-92ef-1bbac7b79e15.jpg)
