@@ -12,16 +12,12 @@
 #define tag	"W25Q64"
 #define _DEBUG_	0
 
-#if 0
-static const int GPIO_MISO = 12;
-static const int GPIO_MOSI = 13;
-static const int GPIO_SCLK = 14;
-#endif
-
-#if 0
-static const int GPIO_MISO = 19;
-static const int GPIO_MOSI = 23;
-static const int GPIO_SCLK = 18;
+#ifdef CONFIG_IDF_TARGET_ESP32
+#define LCD_HOST    HSPI_HOST
+#define DMA_CHAN    2
+#elif defined CONFIG_IDF_TARGET_ESP32S2
+#define LCD_HOST    SPI2_HOST
+#define DMA_CHAN    LCD_HOST
 #endif
 
 //static const int SPI_Command_Mode = 0;
@@ -56,7 +52,7 @@ void spi_master_init(W25Q64_t * dev, int GPIO_CS, int GPIO_MISO, int GPIO_MOSI, 
 		.quadhd_io_num = -1
 	};
 
-	ret = spi_bus_initialize( HSPI_HOST, &spi_bus_config, 1 );
+	ret = spi_bus_initialize( LCD_HOST, &spi_bus_config, DMA_CHAN );
 	if(_DEBUG_)ESP_LOGI(tag, "spi_bus_initialize=%d",ret);
 	assert(ret==ESP_OK);
 
@@ -67,7 +63,7 @@ void spi_master_init(W25Q64_t * dev, int GPIO_CS, int GPIO_MISO, int GPIO_MOSI, 
 	devcfg.queue_size = 1;
 
 	spi_device_handle_t handle;
-	ret = spi_bus_add_device( HSPI_HOST, &devcfg, &handle);
+	ret = spi_bus_add_device( LCD_HOST, &devcfg, &handle);
 	if(_DEBUG_)ESP_LOGI(tag, "spi_bus_add_device=%d",ret);
 	assert(ret==ESP_OK);
 	dev->_SPIHandle = handle;

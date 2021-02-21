@@ -2,13 +2,24 @@
 SPI Flash Memory W25Q64 Access Library for esp-idf.   
 I ported from [here](https://github.com/Tamakichi/Arduino-W25Q64).   
 
-# Installation
+# Installation for ESP32
 
 ```
 git clone https://github.com/nopnop2002/esp-idf-w25q64
 cd esp-idf-w25q64
-make menuconfig
-make flash monitor
+idf.py set-target esp32
+idf.py menuconfig
+idf.py flash
+```
+
+# Installation for ESP32S2
+
+```
+git clone https://github.com/nopnop2002/esp-idf-w25q64
+cd esp-idf-w25q64
+idf.py set-target esp32S2
+idf.py menuconfig
+idf.py flash
 ```
 
 You have to set this config value with menuconfig.   
@@ -25,8 +36,6 @@ Select SPI3
 
 Select CUSTOM   
 ![config-4](https://user-images.githubusercontent.com/6020549/102706064-ed31e400-42d1-11eb-859b-bfb5ce9d07f4.jpg)
-
----
 
 # API
 
@@ -78,9 +87,7 @@ bool W25Q64_eraseAll(W25Q64_t * dev, bool flgwait);
 // Write data to memory  
 int16_t W25Q64_pageWrite(W25Q64_t * dev, uint16_t sect_no, uint16_t inaddr, uint8_t* buf, int16_t n);  
 
----
-
-# Wireing  
+# Wireing for ESP32
 
 |#|W25Q64||ESP32(SPI2)|ESP32(SPI3)|ESP32(CUSTOM)|
 |:-:|:-:|:-:|:-:|:-:|:-:|
@@ -95,7 +102,20 @@ int16_t W25Q64_pageWrite(W25Q64_t * dev, uint16_t sect_no, uint16_t inaddr, uint
 
 (*) You can change any GPIO using menuconfig.   
 
----
+# Wireing for ESP32S2
+
+|#|W25Q64||ESP32S2(SPI2)|ESP32S2(SPI3)|ESP32S2(CUSTOM)|
+|:-:|:-:|:-:|:-:|:-:|:-:|
+|1|/CS|--|GPIO34(*)|GPIO34(*)|GPIO34(*)|
+|2|MISO|--|GPIO13|GPIO33|GPIO13(*)|
+|3|/WP|--|3.3V|3.3V|3.3V|
+|4|GND|--|GND|GND|GND|
+|5|MOSI|--|GPIO11|GPIO35|GPIO11(*)|
+|6|SCK|--|GPIO12|GPIO36|GPIO12(*)|
+|7|/HOLD|--|3.3V|3.3V|3.3V|
+|8|VCC|--|3.3V|3.3V|3.3V|
+
+(*) You can change any GPIO using menuconfig.   
 
 # Winbond
 

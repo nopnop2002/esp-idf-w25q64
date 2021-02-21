@@ -10,6 +10,7 @@
 #include "esp_log.h"
 
 // You have to set these CONFIG value using menuconfig.
+#ifdef CONFIG_IDF_TARGET_ESP32
 #if CONFIG_SPI2
 static const int MISO_GPIO = 12;
 static const int MOSI_GPIO = 13;
@@ -22,10 +23,28 @@ static const int MOSI_GPIO = 23;
 static const int SCLK_GPIO = 18;
 #endif
 
+#elif defined CONFIG_IDF_TARGET_ESP32S2
+#if CONFIG_SPI2
+static const int MISO_GPIO = 13;
+static const int MOSI_GPIO = 11;
+static const int SCLK_GPIO = 12;
+#endif
+
+#if CONFIG_SPI3
+static const int MISO_GPIO = 33;
+static const int MOSI_GPIO = 35;
+static const int SCLK_GPIO = 36;
+#endif
+
+#endif
+
 #if CONFIG_CUSTOM_SPI
 static const int MISO_GPIO = CONFIG_MISO_GPIO;
 static const int MOSI_GPIO = CONFIG_MOSI_GPIO;
 static const int SCLK_GPIO = CONFIG_SCLK_GPIO;
+//static const int MISO_GPIO = 13;
+//static const int MOSI_GPIO = 11;
+//static const int SCLK_GPIO = 12;
 #endif
 
 #include "w25q64.h"
