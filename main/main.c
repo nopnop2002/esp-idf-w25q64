@@ -9,47 +9,9 @@
 #include "freertos/task.h"
 #include "esp_log.h"
 
-// You have to set these CONFIG value using menuconfig.
-#ifdef CONFIG_IDF_TARGET_ESP32
-#if CONFIG_SPI2
-static const int MISO_GPIO = 12;
-static const int MOSI_GPIO = 13;
-static const int SCLK_GPIO = 14;
-#endif
-
-#if CONFIG_SPI3
-static const int MISO_GPIO = 19;
-static const int MOSI_GPIO = 23;
-static const int SCLK_GPIO = 18;
-#endif
-
-#elif defined CONFIG_IDF_TARGET_ESP32S2
-#if CONFIG_SPI2
-static const int MISO_GPIO = 13;
-static const int MOSI_GPIO = 11;
-static const int SCLK_GPIO = 12;
-#endif
-
-#if CONFIG_SPI3
-static const int MISO_GPIO = 33;
-static const int MOSI_GPIO = 35;
-static const int SCLK_GPIO = 36;
-#endif
-
-#endif
-
-#if CONFIG_CUSTOM_SPI
-static const int MISO_GPIO = CONFIG_MISO_GPIO;
-static const int MOSI_GPIO = CONFIG_MOSI_GPIO;
-static const int SCLK_GPIO = CONFIG_SCLK_GPIO;
-//static const int MISO_GPIO = 13;
-//static const int MOSI_GPIO = 11;
-//static const int SCLK_GPIO = 12;
-#endif
-
 #include "w25q64.h"
 
-#define tag "W25Q64"
+#define TAG "W25Q64"
 
 //
 // 書込みデータのダンプリスト
@@ -98,12 +60,12 @@ void dump(uint8_t *dt, int n)
 
 void app_main()
 {
-	ESP_LOGI(tag, "MISO_GPIO=%d", MISO_GPIO);
-	ESP_LOGI(tag, "MOSI_GPIO=%d", MOSI_GPIO);
-	ESP_LOGI(tag, "SCLK_GPIO=%d", SCLK_GPIO);
-	ESP_LOGI(tag, "CS_GPIO=%d", CONFIG_CS_GPIO);
+	ESP_LOGI(TAG, "MISO_GPIO=%d", CONFIG_MISO_GPIO);
+	ESP_LOGI(TAG, "MOSI_GPIO=%d", CONFIG_MOSI_GPIO);
+	ESP_LOGI(TAG, "SCLK_GPIO=%d", CONFIG_SCLK_GPIO);
+	ESP_LOGI(TAG, "CS_GPIO=%d", CONFIG_CS_GPIO);
 	W25Q64_t dev;
-	spi_master_init(&dev, CONFIG_CS_GPIO, MISO_GPIO, MOSI_GPIO, SCLK_GPIO);
+	spi_master_init(&dev, CONFIG_CS_GPIO, CONFIG_MISO_GPIO, CONFIG_MOSI_GPIO, CONFIG_SCLK_GPIO);
 
 	// ステータスレジスタ1の取得
 	// Get fron Status Register1
@@ -111,30 +73,30 @@ void app_main()
 	esp_err_t ret;
 	ret = W25Q64_readStatusReg1(&dev, &reg1);
 	if (ret != ESP_OK) {
-		ESP_LOGE(tag, "readStatusReg1 fail %d",ret);
+		ESP_LOGE(TAG, "readStatusReg1 fail %d",ret);
 		while(1) { vTaskDelay(1); }
 	} 
-	ESP_LOGI(tag, "readStatusReg1 : %x", reg1);
+	ESP_LOGI(TAG, "readStatusReg1 : %x", reg1);
 	
 	// ステータスレジスタ2の取得
 	// Get fron Status Register2
 	uint8_t reg2;
 	ret = W25Q64_readStatusReg2(&dev, &reg2);
 	if (ret != ESP_OK) {
-		ESP_LOGE(tag, "readStatusReg2 fail %d",ret);
+		ESP_LOGE(TAG, "readStatusReg2 fail %d",ret);
 		while(1) { vTaskDelay(1); }
 	}
-	ESP_LOGI(tag, "readStatusReg2 : %x", reg2);
+	ESP_LOGI(TAG, "readStatusReg2 : %x", reg2);
 
 	// Unique IDの取得テスト
 	// Get Unique ID
 	uint8_t uid[8];
 	ret = W25Q64_readUniqieID(&dev, uid);
 	if (ret != ESP_OK) {
-		ESP_LOGE(tag, "readUniqieID fail %d",ret);
+		ESP_LOGE(TAG, "readUniqieID fail %d",ret);
 		while(1) { vTaskDelay(1); }
 	}
-	ESP_LOGI(tag, "readUniqieID : %x-%x-%x-%x-%x-%x-%x-%x",
+	ESP_LOGI(TAG, "readUniqieID : %x-%x-%x-%x-%x-%x-%x-%x",
 		 uid[0], uid[1], uid[2], uid[3], uid[4], uid[5], uid[6], uid[7]);
 
 	// JEDEC IDの取得テスト
@@ -142,10 +104,10 @@ void app_main()
 	uint8_t jid[3];
 	ret = W25Q64_readManufacturer(&dev, jid);
 	if (ret != ESP_OK) {
-		ESP_LOGE(tag, "readManufacturer fail %d",ret);
+		ESP_LOGE(TAG, "readManufacturer fail %d",ret);
 		while(1) { vTaskDelay(1); }
 	}
-	ESP_LOGI(tag, "readManufacturer : %x-%x-%x",
+	ESP_LOGI(TAG, "readManufacturer : %x-%x-%x",
 		 jid[0], jid[1], jid[2]);
 
 	// データの読み込み(アドレス0から256バイト取得)
@@ -155,26 +117,26 @@ void app_main()
 	memset(rbuf, 0, 256);
 	len =  W25Q64_fastread(&dev, 0, rbuf, 256);
 	if (len != 256) {
-		ESP_LOGE(tag, "fastread fail");
+		ESP_LOGE(TAG, "fastread fail");
 		while(1) { vTaskDelay(1); }
 	}
-	ESP_LOGI(tag, "Fast Read Data: len=%d", len);
+	ESP_LOGI(TAG, "Fast Read Data: len=%d", len);
 	dump(rbuf, 256);
 
 	// セクタ単位の削除
 	// Erase data by Sector
 	bool flag = W25Q64_eraseSector(&dev, 0, true);
 	if (flag == false) {
-		ESP_LOGE(tag, "eraseSector fail %d",ret);
+		ESP_LOGE(TAG, "eraseSector fail %d",ret);
 		while(1) { vTaskDelay(1); }
 	}
 	memset(rbuf, 0, 256);
 	len =  W25Q64_read(&dev, 0, rbuf, 256);
 	if (len != 256) {
-		ESP_LOGE(tag, "read fail");
+		ESP_LOGE(TAG, "read fail");
 		while(1) { vTaskDelay(1); }
 	}
-	ESP_LOGI(tag, "Read Data: len=%d", len);
+	ESP_LOGI(TAG, "Read Data: len=%d", len);
 	dump(rbuf, 256);
 
 	// データ書き込みテスト
@@ -185,20 +147,20 @@ void app_main()
 	}  
 	len =  W25Q64_pageWrite(&dev, 0, 10, wdata, 26);
 	if (len != 26) {
-		ESP_LOGE(tag, "pageWrite fail");
+		ESP_LOGE(TAG, "pageWrite fail");
 		while(1) { vTaskDelay(1); }
 	}
-	ESP_LOGI(tag, "Page Write(Sector=0 Address=10) len=%d", len);
+	ESP_LOGI(TAG, "Page Write(Sector=0 Address=10) len=%d", len);
 
 	// 高速データの読み込み(アドレス0から256バイト取得)
 	// First read 256 byte data from Address=0
 	memset(rbuf, 0, 256);
 	len =  W25Q64_fastread(&dev, 0, rbuf, 256);
 	if (len != 256) {
-		ESP_LOGE(tag, "fastread fail");
+		ESP_LOGE(TAG, "fastread fail");
 		while(1) { vTaskDelay(1); }
 	}
-	ESP_LOGI(tag, "Fast Read Data: len=%d", len);
+	ESP_LOGI(TAG, "Fast Read Data: len=%d", len);
 	dump(rbuf, 256);
 
 	// データ書き込みテスト
@@ -208,22 +170,22 @@ void app_main()
 	}  
 	len =  W25Q64_pageWrite(&dev, 0, 0, wdata, 10);
 	if (len != 10) {
-		ESP_LOGE(tag, "pageWrite fail");
+		ESP_LOGE(TAG, "pageWrite fail");
 		while(1) { vTaskDelay(1); }
 	}
-	ESP_LOGI(tag, "Page Write(Sector=0 Address=0) len=%d", len);
+	ESP_LOGI(TAG, "Page Write(Sector=0 Address=0) len=%d", len);
 
 	// 高速データの読み込み(アドレス0から256バイト取得)
 	// First read 256 byte data from Address=0
 	memset(rbuf, 0, 256);
 	len =  W25Q64_fastread(&dev, 0, rbuf, 256);
 	if (len != 256) {
-		ESP_LOGE(tag, "fastread fail");
+		ESP_LOGE(TAG, "fastread fail");
 		while(1) { vTaskDelay(1); }
 	}
-	ESP_LOGI(tag, "Fast Read Data: len=%d", len);
+	ESP_LOGI(TAG, "Fast Read Data: len=%d", len);
 	dump(rbuf, 256);
 
-	ESP_LOGI(tag, "Success All Test");
+	ESP_LOGI(TAG, "Success All Test");
 }
 

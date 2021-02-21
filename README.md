@@ -23,19 +23,18 @@ idf.py flash
 ```
 
 You have to set this config value with menuconfig.   
-- CONFIG_SPI
+- CONFIG_MISO_GPIO   
+ GPIO number(IOxx) to MISO.
+- CONFIG_MOSI_GPIO   
+ GPIO number(IOxx) to MOSI.
+- CONFIG_SCLK_GPIO   
+ GPIO number(IOxx) to SCLK.
 - CONFIG_CS_GPIO   
+ GPIO number(IOxx) to CS.
 
-![config-1](https://user-images.githubusercontent.com/6020549/96056689-39236f80-0ec2-11eb-9d1d-a3710d8fb2e3.jpg)
-
-Select SPI2   
-![config-2](https://user-images.githubusercontent.com/6020549/102707808-73095b80-42e1-11eb-835a-21c888853ed9.jpg)
-
-Select SPI3   
-![config-3](https://user-images.githubusercontent.com/6020549/102706256-a644ee00-42d3-11eb-97c0-92560605bf9d.jpg)
-
-Select CUSTOM   
-![config-4](https://user-images.githubusercontent.com/6020549/102706064-ed31e400-42d1-11eb-859b-bfb5ce9d07f4.jpg)
+![config-main](https://user-images.githubusercontent.com/6020549/108640422-e47daa00-74dc-11eb-8353-242165cde308.jpg)
+![config-esp32](https://user-images.githubusercontent.com/6020549/108640424-e5aed700-74dc-11eb-8c42-096b383f27b9.jpg)
+![config-esp32s2](https://user-images.githubusercontent.com/6020549/108640426-e5aed700-74dc-11eb-9b28-7d80a1a665ac.jpg)
 
 # API
 
@@ -87,35 +86,22 @@ bool W25Q64_eraseAll(W25Q64_t * dev, bool flgwait);
 // Write data to memory  
 int16_t W25Q64_pageWrite(W25Q64_t * dev, uint16_t sect_no, uint16_t inaddr, uint8_t* buf, int16_t n);  
 
-# Wireing for ESP32
+# Wireing
 
-|#|W25Q64||ESP32(SPI2)|ESP32(SPI3)|ESP32(CUSTOM)|
-|:-:|:-:|:-:|:-:|:-:|:-:|
-|1|/CS|--|GPIO15(*)|GPIO15(*)|GPIO15(*)|
-|2|MISO|--|GPIO12|GPIO19|GPIO12(*)|
+|#|W25Q64||ESP32|ESP32S2|
+|:-:|:-:|:-:|:-:|:-:|
+|1|/CS|--|GPIO5|GPIO34|
+|2|MISO|--|GPIO19|GPIO33|
 |3|/WP|--|3.3V|3.3V|3.3V|
 |4|GND|--|GND|GND|GND|
-|5|MOSI|--|GPIO13|GPIO23|GPIO13(*)|
-|6|SCK|--|GPIO14|GPIO18|GPIO14(*)|
+|5|MOSI|--|GPIO23|GPIO35|
+|6|SCK|--|GPIO18|GPIO36|
 |7|/HOLD|--|3.3V|3.3V|3.3V|
 |8|VCC|--|3.3V|3.3V|3.3V|
 
-(*) You can change any GPIO using menuconfig.   
+__You can change it to any pin using menuconfig.__   
+__However, changing to some pins does not work properly.__
 
-# Wireing for ESP32S2
-
-|#|W25Q64||ESP32S2(SPI2)|ESP32S2(SPI3)|ESP32S2(CUSTOM)|
-|:-:|:-:|:-:|:-:|:-:|:-:|
-|1|/CS|--|GPIO34(*)|GPIO34(*)|GPIO34(*)|
-|2|MISO|--|GPIO13|GPIO33|GPIO13(*)|
-|3|/WP|--|3.3V|3.3V|3.3V|
-|4|GND|--|GND|GND|GND|
-|5|MOSI|--|GPIO11|GPIO35|GPIO11(*)|
-|6|SCK|--|GPIO12|GPIO36|GPIO12(*)|
-|7|/HOLD|--|3.3V|3.3V|3.3V|
-|8|VCC|--|3.3V|3.3V|3.3V|
-
-(*) You can change any GPIO using menuconfig.   
 
 # Winbond
 
