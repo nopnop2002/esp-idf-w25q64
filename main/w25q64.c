@@ -12,10 +12,11 @@
 #define tag	"W25Q64"
 #define _DEBUG_	0
 
-#ifdef CONFIG_IDF_TARGET_ESP32
+#if CONFIG_IDF_TARGET_ESP32
 #define LCD_HOST    HSPI_HOST
 #define DMA_CHAN    2
-#elif defined CONFIG_IDF_TARGET_ESP32S2
+
+#elif CONFIG_IDF_TARGET_ESP32S2
 #define LCD_HOST    SPI2_HOST
 #define DMA_CHAN    LCD_HOST
 #endif
