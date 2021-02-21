@@ -9,12 +9,14 @@ menu "W25Q64 Configuration"
 			bool "SPI2"
 			help
 				SPI BUS is SPI2.
-				SCLK GPIO14. MISO GPIO12. MOSI GPIO13.
+				On the ESP32, MISO GPIO12. MOSI GPIO13. SCLK GPIO14.
+				On the ESP32S2, MISO GPIO13. MOSI GPIO11. SCLK GPIO12
 		config SPI3
 			bool "SPI3"
 			help
 				SPI BUS is SPI3.
-				SCLK GPIO18. MISO GPIO19. MOSI GPIO23.
+				On the ESP32, MISO GPIO19. MOSI GPIO23. SCLK GPIO18.
+				On the ESP32S2, MISO GPIO33. MOSI GPIO35. SCLK GPIO36.
 		config CUSTOM_SPI
 			bool "CUSTOM"
 			help
@@ -26,7 +28,7 @@ menu "W25Q64 Configuration"
 		int "MISO GPIO number"
 		range 0 46
 		default 12 if IDF_TARGET_ESP32
-		default 33 if IDF_TARGET_ESP32S2
+		default 13 if IDF_TARGET_ESP32S2
 		help
 			GPIO number (IOxx) to SPI MISO.
 			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to MISO.
@@ -38,7 +40,7 @@ menu "W25Q64 Configuration"
 		int "MOSI GPIO number"
 		range 0 46
 		default 13 if IDF_TARGET_ESP32
-		default 35 if IDF_TARGET_ESP32S2
+		default 11 if IDF_TARGET_ESP32S2
 		help
 			GPIO number (IOxx) to SPI MOSI.
 			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to MOSI.
@@ -50,7 +52,7 @@ menu "W25Q64 Configuration"
 		int "SCLK GPIO number"
 		range 0 46
 		default 14 if IDF_TARGET_ESP32
-		default 36 if IDF_TARGET_ESP32S2
+		default 12 if IDF_TARGET_ESP32S2
 		help
 			GPIO number (IOxx) to SPI SCLK.
 			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to SCLK.
