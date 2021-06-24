@@ -33,7 +33,11 @@ You have to set this config value with menuconfig.
  GPIO number(IOxx) to CS.
 
 ![config-main](https://user-images.githubusercontent.com/6020549/108640422-e47daa00-74dc-11eb-8353-242165cde308.jpg)
+
+- Default for ESP32   
 ![config-esp32](https://user-images.githubusercontent.com/6020549/108640424-e5aed700-74dc-11eb-8c42-096b383f27b9.jpg)
+
+- Default for ESP32-S2   
 ![config-esp32s2](https://user-images.githubusercontent.com/6020549/108640426-e5aed700-74dc-11eb-9b28-7d80a1a665ac.jpg)
 
 # API
