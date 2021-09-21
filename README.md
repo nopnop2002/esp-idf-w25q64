@@ -39,7 +39,7 @@ You have to set this config value with menuconfig.
 
 # Wireing
 
-|#|W25Q64||ESP32|ESP32S2||
+|#|W25Q64||ESP32|ESP32-S2||
 |:-:|:-:|:-:|:-:|:-:|:-:|
 |1|/CS|--|GPIO5|GPIO34|(*1)|
 |2|MISO|--|GPIO19|GPIO33|(*1)|
