@@ -12,7 +12,7 @@ idf.py menuconfig
 idf.py flash
 ```
 
-# Installation for ESP32S2
+# Installation for ESP32-S2
 
 ```
 git clone https://github.com/nopnop2002/esp-idf-w25q64
