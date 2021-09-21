@@ -2,6 +2,10 @@
 SPI Flash Memory W25Q64 Access Library for esp-idf.   
 I ported from [here](https://github.com/Tamakichi/Arduino-W25Q64).   
 
+# Software requirements
+esp-idf v4.4 or later.   
+This is because this version supports ESP32-C3.   
+
 # Installation for ESP32
 
 ```
@@ -17,10 +21,26 @@ idf.py flash
 ```
 git clone https://github.com/nopnop2002/esp-idf-w25q64
 cd esp-idf-w25q64
-idf.py set-target esp32S2
+idf.py set-target esp32s2
 idf.py menuconfig
 idf.py flash
 ```
+
+# Installation for ESP32-C3
+
+```
+git clone https://github.com/nopnop2002/esp-idf-w25q64
+cd esp-idf-w25q64
+idf.py set-target esp32c3
+idf.py menuconfig
+idf.py flash
+```
+
+__Note__   
+For some reason GPIO06, GPIO08, GPIO09, GPIO19 cannot be used for SPI clock pins on my board.   
+I looked at the ESP32-C3 datasheet, but I don't understand why.   
+This may be a problem only for my board.   
+If you find a solution, please let me know.   
 
 # Configuration   
 You have to set this config value with menuconfig.   
@@ -39,18 +59,19 @@ You have to set this config value with menuconfig.
 
 # Wireing
 
-|#|W25Q64||ESP32|ESP32-S2||
+|#|W25Q64||ESP32|ESP32-S2|ESP32-C3|
 |:-:|:-:|:-:|:-:|:-:|:-:|
-|1|/CS|--|GPIO5|GPIO34|(*1)|
-|2|MISO|--|GPIO19|GPIO33|(*1)|
-|3|/WP|--|3.3V|3.3V||
-|4|GND|--|GND|GND||
-|5|MOSI|--|GPIO23|GPIO35|(*1)|
-|6|SCK|--|GPIO18|GPIO36|(*1)|
-|7|/HOLD|--|3.3V|3.3V||
-|8|VCC|--|3.3V|3.3V||
+|1|/CS|--|GPIO5|GPIO34|GPIO9|
+|2|MISO|--|GPIO19|GPIO33|GPIO18|
+|3|/WP|--|3.3V|3.3V|3.3V|
+|4|GND|--|GND|GND|GND|
+|5|MOSI|--|GPIO23|GPIO35|GPIO19|
+|6|SCK|--|GPIO18|GPIO36|GPIO10|
+|7|/HOLD|--|3.3V|3.3V|3.3V|
+|8|VCC|--|3.3V|3.3V|3.3V|
 
-(*1) You can change using menuconfig. But it may not work with other GPIOs.  
+__You can change it to any pin using menuconfig.__   
+__But it may not work with other GPIOs.__
 
 
 # API
@@ -174,4 +195,3 @@ But I couldn't get it working.
 There is a example to build a FAT file system on External SPI FLSAH Memory is available [here](https://github.com/espressif/esp-idf/tree/master/examples/storage/ext_flash_fatfs).   
 The ESP32's onboard FLASH is 4MByte, and you can reserve up to about 3MByte of storage on the onboard FLASH.   
 With the large capacity SPI FLSAH Memory, you can add a large amount of storage.   
-This repository may no longer be needed.   

@@ -13,12 +13,11 @@
 #define _DEBUG_	0
 
 #if CONFIG_IDF_TARGET_ESP32
-#define LCD_HOST    HSPI_HOST
-#define DMA_CHAN    2
-
+#define LCD_HOST	HSPI_HOST
 #elif CONFIG_IDF_TARGET_ESP32S2
-#define LCD_HOST    SPI2_HOST
-#define DMA_CHAN    LCD_HOST
+#define LCD_HOST	SPI2_HOST
+#elif defined CONFIG_IDF_TARGET_ESP32C3
+#define LCD_HOST	SPI2_HOST
 #endif
 
 //static const int SPI_Command_Mode = 0;
@@ -41,7 +40,8 @@ void spi_master_init(W25Q64_t * dev, int GPIO_CS, int GPIO_MISO, int GPIO_MOSI, 
 {
 	esp_err_t ret;
 
-	gpio_pad_select_gpio( GPIO_CS );
+	//gpio_pad_select_gpio( GPIO_CS );
+	gpio_reset_pin( GPIO_CS );
 	gpio_set_direction( GPIO_CS, GPIO_MODE_OUTPUT );
 	gpio_set_level( GPIO_CS, 0 );
 
@@ -53,7 +53,7 @@ void spi_master_init(W25Q64_t * dev, int GPIO_CS, int GPIO_MISO, int GPIO_MOSI, 
 		.quadhd_io_num = -1
 	};
 
-	ret = spi_bus_initialize( LCD_HOST, &spi_bus_config, DMA_CHAN );
+	ret = spi_bus_initialize( LCD_HOST, &spi_bus_config, SPI_DMA_CH_AUTO );
 	if(_DEBUG_)ESP_LOGI(tag, "spi_bus_initialize=%d",ret);
 	assert(ret==ESP_OK);
 
@@ -61,7 +61,8 @@ void spi_master_init(W25Q64_t * dev, int GPIO_CS, int GPIO_MISO, int GPIO_MOSI, 
 	memset( &devcfg, 0, sizeof( spi_device_interface_config_t ) );
 	devcfg.clock_speed_hz = SPI_Frequency;
 	devcfg.spics_io_num = GPIO_CS;
-	devcfg.queue_size = 1;
+	devcfg.queue_size = 7;
+	devcfg.mode = 0;
 
 	spi_device_handle_t handle;
 	ret = spi_bus_add_device( LCD_HOST, &devcfg, &handle);
@@ -112,7 +113,7 @@ esp_err_t W25Q64_readStatusReg2(W25Q64_t * dev, uint8_t * reg2)
 
 //
 // Unique IDの取得
-// id(out):Unique ID 8バイトを返す  
+// id(out):Unique ID 8バイトを返す	
 //
 esp_err_t W25Q64_readUniqieID(W25Q64_t * dev, uint8_t * id)
 {
@@ -235,9 +236,9 @@ uint16_t W25Q64_read(W25Q64_t * dev, uint32_t addr, uint8_t *buf, uint16_t n)
 	uint8_t *data;
 	data = (uint8_t *)malloc(n+4);
 	data[0] = CMD_READ_DATA;
-	data[1] = (addr>>16) & 0xFF;     // A23-A16
-	data[2] = (addr>>8) & 0xFF;      // A15-A08
-	data[3] = addr & 0xFF;           // A07-A00
+	data[1] = (addr>>16) & 0xFF;	 // A23-A16
+	data[2] = (addr>>8) & 0xFF;		 // A15-A08
+	data[3] = addr & 0xFF;			 // A07-A00
 	memset( &SPITransaction, 0, sizeof( spi_transaction_t ) );
 	SPITransaction.length = (n+4) * 8;
 	SPITransaction.tx_buffer = data;
@@ -261,9 +262,9 @@ uint16_t W25Q64_fastread(W25Q64_t * dev, uint32_t addr, uint8_t *buf, uint16_t n
 	uint8_t *data;
 	data = (uint8_t *)malloc(n+5);
 	data[0] = CMD_FAST_READ;
-	data[1] = (addr>>16) & 0xFF;     // A23-A16
-	data[2] = (addr>>8) & 0xFF;      // A15-A08
-	data[3] = addr & 0xFF;           // A07-A00
+	data[1] = (addr>>16) & 0xFF;	 // A23-A16
+	data[2] = (addr>>8) & 0xFF;		 // A15-A08
+	data[3] = addr & 0xFF;			 // A07-A00
 	data[4] = 0;
 	memset( &SPITransaction, 0, sizeof( spi_transaction_t ) );
 	SPITransaction.length = (n+5) * 8;
@@ -283,8 +284,8 @@ uint16_t W25Q64_fastread(W25Q64_t * dev, uint32_t addr, uint8_t *buf, uint16_t n
 // sect_no(in) セクタ番号(0 - 2048)
 // flgwait(in) true:処理待ちを行う false:待ち無し
 // 戻り値: true:正常終了 false:失敗
-//  補足： データシートでは消去に通常 30ms 、最大400msかかると記載されている
-//         アドレス23ビットのうち上位 11ビットがセクタ番号の相当する。下位12ビットはセクタ内アドレスとなる。
+//	補足： データシートでは消去に通常 30ms 、最大400msかかると記載されている
+//		   アドレス23ビットのうち上位 11ビットがセクタ番号の相当する。下位12ビットはセクタ内アドレスとなる。
 //
 bool W25Q64_eraseSector(W25Q64_t * dev, uint16_t sect_no, bool flgwait)
 {
@@ -322,8 +323,8 @@ bool W25Q64_eraseSector(W25Q64_t * dev, uint16_t sect_no, bool flgwait)
 // blk_no(in) ブロック番号(0 - 127)
 // flgwait(in) true:処理待ちを行う false:待ち無し
 // 戻り値: true:正常終了 false:失敗
-//   補足: データシートでは消去に通常 150ms 、最大1000msかかると記載されている
-//         アドレス23ビットのうち上位 7ビットがブロックの相当する。下位16ビットはブロック内アドレスとなる。
+//	 補足: データシートでは消去に通常 150ms 、最大1000msかかると記載されている
+//		   アドレス23ビットのうち上位 7ビットがブロックの相当する。下位16ビットはブロック内アドレスとなる。
 //
 bool W25Q64_erase64Block(W25Q64_t * dev, uint16_t blk_no, bool flgwait)
 {
@@ -361,8 +362,8 @@ bool W25Q64_erase64Block(W25Q64_t * dev, uint16_t blk_no, bool flgwait)
 // blk_no(in) ブロック番号(0 - 255)
 // flgwait(in) true:処理待ちを行う false:待ち無し
 // 戻り値: true:正常終了 false:失敗
-//   補足: データシートでは消去に通常 120ms 、最大800msかかると記載されている
-//         アドレス23ビットのうち上位 8ビットがブロックの相当する。下位15ビットはブロック内アドレスとなる。
+//	 補足: データシートでは消去に通常 120ms 、最大800msかかると記載されている
+//		   アドレス23ビットのうち上位 8ビットがブロックの相当する。下位15ビットはブロック内アドレスとなる。
 //
 bool W25Q64_erase32Block(W25Q64_t * dev, uint16_t blk_no, bool flgwait)
 {
@@ -400,7 +401,7 @@ bool W25Q64_erase32Block(W25Q64_t * dev, uint16_t blk_no, bool flgwait)
 // 全領域の消去
 // flgwait(in) true:処理待ちを行う false:待ち無し
 // 戻り値: true:正常終了 false:失敗
-//   補足: データシートでは消去に通常 15s 、最大30sかかると記載されている
+//	 補足: データシートでは消去に通常 15s 、最大30sかかると記載されている
 //
 bool W25Q64_eraseAll(W25Q64_t * dev, bool flgwait)
 {
@@ -433,7 +434,7 @@ bool W25Q64_eraseAll(W25Q64_t * dev, bool flgwait)
 // sect_no(in) : セクタ番号(0x00 - 0x7FF) 
 // inaddr(in)  : セクタ内アドレス(0x00-0xFFF)
 // data(in)    : 書込みデータ格納アドレス
-// n(in)       : 書込みバイト数(0～256)
+// n(in)	   : 書込みバイト数(0～256)
 //
 int16_t W25Q64_pageWrite(W25Q64_t * dev, uint16_t sect_no, uint16_t inaddr, uint8_t* buf, int16_t n)
 {
