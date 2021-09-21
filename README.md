@@ -22,6 +22,7 @@ idf.py menuconfig
 idf.py flash
 ```
 
+# Configuration   
 You have to set this config value with menuconfig.   
 - CONFIG_MISO_GPIO   
  GPIO number(IOxx) to MISO.
