@@ -35,13 +35,23 @@ You have to set this config value with menuconfig.
 
 ![config-main](https://user-images.githubusercontent.com/6020549/108640422-e47daa00-74dc-11eb-8353-242165cde308.jpg)
 
-- Default for ESP32
-
 ![config-esp32](https://user-images.githubusercontent.com/6020549/108640424-e5aed700-74dc-11eb-8c42-096b383f27b9.jpg)
 
-- Default for ESP32-S2
+# Wireing
 
-![config-esp32s2](https://user-images.githubusercontent.com/6020549/108640426-e5aed700-74dc-11eb-9b28-7d80a1a665ac.jpg)
+|#|W25Q64||ESP32|ESP32S2|
+|:-:|:-:|:-:|:-:|:-:|
+|1|/CS|--|GPIO5|GPIO34|
+|2|MISO|--|GPIO19|GPIO33|
+|3|/WP|--|3.3V|3.3V|3.3V|
+|4|GND|--|GND|GND|GND|
+|5|MOSI|--|GPIO23|GPIO35|
+|6|SCK|--|GPIO18|GPIO36|
+|7|/HOLD|--|3.3V|3.3V|3.3V|
+|8|VCC|--|3.3V|3.3V|3.3V|
+
+__You can change it to any pin using menuconfig.__   
+__However, changing to some pins does not work properly.__
 
 # API
 
@@ -93,21 +103,6 @@ bool W25Q64_eraseAll(W25Q64_t * dev, bool flgwait);
 // Write data to memory  
 int16_t W25Q64_pageWrite(W25Q64_t * dev, uint16_t sect_no, uint16_t inaddr, uint8_t* buf, int16_t n);  
 
-# Wireing
-
-|#|W25Q64||ESP32|ESP32S2|
-|:-:|:-:|:-:|:-:|:-:|
-|1|/CS|--|GPIO5|GPIO34|
-|2|MISO|--|GPIO19|GPIO33|
-|3|/WP|--|3.3V|3.3V|3.3V|
-|4|GND|--|GND|GND|GND|
-|5|MOSI|--|GPIO23|GPIO35|
-|6|SCK|--|GPIO18|GPIO36|
-|7|/HOLD|--|3.3V|3.3V|3.3V|
-|8|VCC|--|3.3V|3.3V|3.3V|
-
-__You can change it to any pin using menuconfig.__   
-__However, changing to some pins does not work properly.__
 
 
 # Winbond
