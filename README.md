@@ -43,12 +43,12 @@ You have to set this config value with menuconfig.
 |:-:|:-:|:-:|:-:|:-:|:-:|
 |1|/CS|--|GPIO5|GPIO34|(*1)|
 |2|MISO|--|GPIO19|GPIO33|(*1)|
-|3|/WP|--|3.3V|3.3V|3.3V||
-|4|GND|--|GND|GND|GND||
+|3|/WP|--|3.3V|3.3V||
+|4|GND|--|GND|GND||
 |5|MOSI|--|GPIO23|GPIO35|(*1)|
 |6|SCK|--|GPIO18|GPIO36|(*1)|
-|7|/HOLD|--|3.3V|3.3V|3.3V||
-|8|VCC|--|3.3V|3.3V|3.3V||
+|7|/HOLD|--|3.3V|3.3V||
+|8|VCC|--|3.3V|3.3V||
 
 (*1) You can change using menuconfig. But it may not work with other GPIOs.  
 
