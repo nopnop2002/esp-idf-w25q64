@@ -39,19 +39,19 @@ You have to set this config value with menuconfig.
 
 # Wireing
 
-|#|W25Q64||ESP32|ESP32S2|
-|:-:|:-:|:-:|:-:|:-:|
-|1|/CS|--|GPIO5|GPIO34|
-|2|MISO|--|GPIO19|GPIO33|
-|3|/WP|--|3.3V|3.3V|3.3V|
-|4|GND|--|GND|GND|GND|
-|5|MOSI|--|GPIO23|GPIO35|
-|6|SCK|--|GPIO18|GPIO36|
-|7|/HOLD|--|3.3V|3.3V|3.3V|
-|8|VCC|--|3.3V|3.3V|3.3V|
+|#|W25Q64||ESP32|ESP32S2||
+|:-:|:-:|:-:|:-:|:-:|:-:|
+|1|/CS|--|GPIO5|GPIO34|(*1)|
+|2|MISO|--|GPIO19|GPIO33|(*1)|
+|3|/WP|--|3.3V|3.3V|3.3V||
+|4|GND|--|GND|GND|GND||
+|5|MOSI|--|GPIO23|GPIO35|(*1)|
+|6|SCK|--|GPIO18|GPIO36|(*1)|
+|7|/HOLD|--|3.3V|3.3V|3.3V||
+|8|VCC|--|3.3V|3.3V|3.3V||
 
-__You can change it to any pin using menuconfig.__   
-__However, changing to some pins does not work properly.__
+(*1) You can change using menuconfig. But it may not work with other GPIOs.  
+
 
 # API
 
