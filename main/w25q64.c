@@ -9,7 +9,7 @@
 
 #include "w25q64.h"
 
-#define tag	"W25Q64"
+#define TAG	"W25Q64"
 #define _DEBUG_	0
 
 #if CONFIG_IDF_TARGET_ESP32
@@ -36,44 +36,54 @@ void W25Q64_dump(char *id, int ret, uint8_t *data, int len)
 }
 
 
-void spi_master_init(W25Q64_t * dev, int GPIO_CS, int GPIO_MISO, int GPIO_MOSI, int GPIO_SCLK)
+void W25Q64_init(W25Q64_t * dev)
 {
+  ESP_LOGI(TAG, "MISO_GPIO=%d", CONFIG_MISO_GPIO);
+  ESP_LOGI(TAG, "MOSI_GPIO=%d", CONFIG_MOSI_GPIO);
+  ESP_LOGI(TAG, "SCLK_GPIO=%d", CONFIG_SCLK_GPIO);
+  ESP_LOGI(TAG, "CS_GPIO=%d", CONFIG_CS_GPIO);
+
 	esp_err_t ret;
 
-	//gpio_pad_select_gpio( GPIO_CS );
-	gpio_reset_pin( GPIO_CS );
-	gpio_set_direction( GPIO_CS, GPIO_MODE_OUTPUT );
-	gpio_set_level( GPIO_CS, 0 );
+	//gpio_pad_select_gpio( CONFIG_CS_GPIO );
+	gpio_reset_pin( CONFIG_CS_GPIO );
+	gpio_set_direction( CONFIG_CS_GPIO, GPIO_MODE_OUTPUT );
+	gpio_set_level( CONFIG_CS_GPIO, 0 );
 
 	spi_bus_config_t spi_bus_config = {
-		.sclk_io_num = GPIO_SCLK,
-		.mosi_io_num = GPIO_MOSI,
-		.miso_io_num = GPIO_MISO,
+		.sclk_io_num = CONFIG_SCLK_GPIO,
+		.mosi_io_num = CONFIG_MOSI_GPIO,
+		.miso_io_num = CONFIG_MISO_GPIO,
 		.quadwp_io_num = -1,
 		.quadhd_io_num = -1
 	};
 
 	ret = spi_bus_initialize( LCD_HOST, &spi_bus_config, SPI_DMA_CH_AUTO );
-	if(_DEBUG_)ESP_LOGI(tag, "spi_bus_initialize=%d",ret);
+	if(_DEBUG_)ESP_LOGI(TAG, "spi_bus_initialize=%d",ret);
 	assert(ret==ESP_OK);
 
 	spi_device_interface_config_t devcfg;
 	memset( &devcfg, 0, sizeof( spi_device_interface_config_t ) );
 	devcfg.clock_speed_hz = SPI_Frequency;
-	devcfg.spics_io_num = GPIO_CS;
+	devcfg.spics_io_num = CONFIG_CS_GPIO;
 	devcfg.queue_size = 7;
 	devcfg.mode = 0;
 
 	spi_device_handle_t handle;
 	ret = spi_bus_add_device( LCD_HOST, &devcfg, &handle);
-	if(_DEBUG_)ESP_LOGI(tag, "spi_bus_add_device=%d",ret);
+	if(_DEBUG_)ESP_LOGI(TAG, "spi_bus_add_device=%d",ret);
 	assert(ret==ESP_OK);
 	dev->_SPIHandle = handle;
+	dev->_4bmode = false;
+#if CONFIG_4B_MODE
+	ESP_LOGW(TAG, "4-Byte Address Mode");
+	dev->_4bmode = true;
+#endif
 }
 
 //
-// ステータスレジスタ1の値取得
-// reg1(out):ステータスレジスタ1の値
+// Get status register 1
+// reg1(out):Value of status register 1
 //
 esp_err_t W25Q64_readStatusReg1(W25Q64_t * dev, uint8_t * reg1)
 {
@@ -86,14 +96,14 @@ esp_err_t W25Q64_readStatusReg1(W25Q64_t * dev, uint8_t * reg1)
 	SPITransaction.rx_buffer = data;
 	esp_err_t ret = spi_device_transmit( dev->_SPIHandle, &SPITransaction );
 	assert(ret==ESP_OK);
-	if(_DEBUG_)ESP_LOGI(tag, "W25Q64_readStatusReg1=%x",data[1]);
+	if(_DEBUG_)ESP_LOGI(TAG, "W25Q64_readStatusReg1=%x",data[1]);
 	*reg1 = data[1];
 	return ret;
 }
 
 //
-// ステータスレジスタ2の値取得
-// reg2(out):ステータスレジスタ2の値
+// Get status register 2
+// reg2(out):Value of status register 2
 //
 esp_err_t W25Q64_readStatusReg2(W25Q64_t * dev, uint8_t * reg2)
 {
@@ -106,14 +116,14 @@ esp_err_t W25Q64_readStatusReg2(W25Q64_t * dev, uint8_t * reg2)
 	SPITransaction.rx_buffer = data;
 	esp_err_t ret = spi_device_transmit( dev->_SPIHandle, &SPITransaction );
 	assert(ret==ESP_OK);
-	if(_DEBUG_)ESP_LOGI(tag, "W25Q64_readStatusReg2=%x",data[1]);
+	if(_DEBUG_)ESP_LOGI(TAG, "W25Q64_readStatusReg2=%x",data[1]);
 	*reg2 = data[1];
 	return ret;
 }
 
 //
-// Unique IDの取得
-// id(out):Unique ID 8バイトを返す	
+// Get Unique ID
+// id(out):Unique ID 8 bytes	
 //
 esp_err_t W25Q64_readUniqieID(W25Q64_t * dev, uint8_t * id)
 {
@@ -132,8 +142,8 @@ esp_err_t W25Q64_readUniqieID(W25Q64_t * dev, uint8_t * id)
 }
 
 //
-// JEDEC ID(Manufacture, Memory Type,Capacity)の取得
-// d(out) :Manufacture, Memory Type,Capacityの3バイトを格納する
+// Get JEDEC ID(Manufacture, Memory Type,Capacity)
+// d(out):Stores 3 bytes of Manufacture, Memory Type, Capacity
 //
 esp_err_t W25Q64_readManufacturer(W25Q64_t * dev, uint8_t * id)
 {
@@ -152,8 +162,8 @@ esp_err_t W25Q64_readManufacturer(W25Q64_t * dev, uint8_t * id)
 }
 
 //
-// 書込み等の処理中チェック
-// 戻り値: true:作業 、false:アイドル中
+// Check during processing such as writing
+// Return value: true:processing false:idle
 //
 bool W25Q64_IsBusy(W25Q64_t * dev)
 {
@@ -173,7 +183,7 @@ bool W25Q64_IsBusy(W25Q64_t * dev)
 
 
 //
-//　パワーダウン指定 
+// Power down 
 //
 esp_err_t W25Q64_powerDown(W25Q64_t * dev)
 {
@@ -191,7 +201,7 @@ esp_err_t W25Q64_powerDown(W25Q64_t * dev)
 
 
 //
-// 書込み許可設定
+// Write permission setting
 //
 esp_err_t W25Q64_WriteEnable(W25Q64_t * dev)
 {
@@ -209,7 +219,7 @@ esp_err_t W25Q64_WriteEnable(W25Q64_t * dev)
 
 
 //
-// 書込み禁止設定
+// Write-protected setting
 //
 esp_err_t W25Q64_WriteDisable(W25Q64_t * dev)
 {
@@ -226,53 +236,80 @@ esp_err_t W25Q64_WriteDisable(W25Q64_t * dev)
 }
 
 //
-// データの読み込み
-// addr(in): 読込開始アドレス (24ビット 0x000000 - 0xFFFFFF)
-// n(in):読込データ数
+// Read data
+// addr(in):Read start address
+//          3 Bytes Address Mode : 24 Bits 0x000000 - 0xFFFFFF
+//          4 Bytes Address Mode : 32 Bits 0x00000000 - 0xFFFFFFFF
+// n(in):Number of read data
 //
 uint16_t W25Q64_read(W25Q64_t * dev, uint32_t addr, uint8_t *buf, uint16_t n)
 { 
 	spi_transaction_t SPITransaction;
 	uint8_t *data;
-	data = (uint8_t *)malloc(n+4);
-	data[0] = CMD_READ_DATA;
-	data[1] = (addr>>16) & 0xFF;	 // A23-A16
-	data[2] = (addr>>8) & 0xFF;		 // A15-A08
-	data[3] = addr & 0xFF;			 // A07-A00
+	data = (uint8_t *)malloc(n+5);
+	size_t offset;
+	if (dev->_4bmode) {
+		data[0] = CMD_READ_DATA4B;
+		data[1] = (addr>>24) & 0xFF; // A31-A24
+		data[2] = (addr>>16) & 0xFF; // A23-A16
+		data[3] = (addr>>8) & 0xFF; // A15-A08
+		data[4] = addr & 0xFF; // A07-A00
+		offset = 5;
+	} else {
+		data[0] = CMD_READ_DATA;
+		data[1] = (addr>>16) & 0xFF; // A23-A16
+		data[2] = (addr>>8) & 0xFF; // A15-A08
+		data[3] = addr & 0xFF; // A07-A00
+		offset = 4;
+	}
 	memset( &SPITransaction, 0, sizeof( spi_transaction_t ) );
-	SPITransaction.length = (n+4) * 8;
+	SPITransaction.length = (n+offset) * 8;
 	SPITransaction.tx_buffer = data;
 	SPITransaction.rx_buffer = data;
 	esp_err_t ret = spi_device_transmit( dev->_SPIHandle, &SPITransaction );
 	assert(ret==ESP_OK);
-	memcpy(buf, &data[4], n);
+	memcpy(buf, &data[offset], n);
 	free(data);
 	if (ret != ESP_OK) return 0;
 	return n;
 }
 
 //
-// 高速データの読み込み
-// addr(in): 読込開始アドレス (24ビット 0x00000 - 0xFFFFF)
-// n(in):読込データ数
+// Fast read data
+// addr(in):Read start address
+//          3 Bytes Address Mode : 24 Bits 0x000000 - 0xFFFFFF
+//          4 Bytes Address Mode : 32 Bits 0x00000000 - 0xFFFFFFFF
+// n(in):Number of read data
 //
 uint16_t W25Q64_fastread(W25Q64_t * dev, uint32_t addr, uint8_t *buf, uint16_t n)
 {
 	spi_transaction_t SPITransaction;
 	uint8_t *data;
-	data = (uint8_t *)malloc(n+5);
-	data[0] = CMD_FAST_READ;
-	data[1] = (addr>>16) & 0xFF;	 // A23-A16
-	data[2] = (addr>>8) & 0xFF;		 // A15-A08
-	data[3] = addr & 0xFF;			 // A07-A00
-	data[4] = 0;
+	data = (uint8_t *)malloc(n+6);
+	size_t offset;
+	if (dev->_4bmode) {
+		data[0] = CMD_FAST_READ4B;
+		data[1] = (addr>>24) & 0xFF; // A31-A24
+		data[2] = (addr>>16) & 0xFF; // A23-A16
+		data[3] = (addr>>8) & 0xFF; // A15-A08
+		data[4] = addr & 0xFF; // A07-A00
+		data[5] = 0; // Dummy
+		offset = 6;
+	} else {
+		data[0] = CMD_FAST_READ;
+		data[1] = (addr>>16) & 0xFF; // A23-A16
+		data[2] = (addr>>8) & 0xFF; // A15-A08
+		data[3] = addr & 0xFF; // A07-A00
+		data[4] = 0; // Dummy
+		offset = 5;
+	}
 	memset( &SPITransaction, 0, sizeof( spi_transaction_t ) );
-	SPITransaction.length = (n+5) * 8;
+	SPITransaction.length = (n+offset) * 8;
 	SPITransaction.tx_buffer = data;
 	SPITransaction.rx_buffer = data;
 	esp_err_t ret = spi_device_transmit( dev->_SPIHandle, &SPITransaction );
 	assert(ret==ESP_OK);
-	memcpy(buf, &data[5], n);
+	memcpy(buf, &data[offset], n);
 	free(data);
 	if (ret != ESP_OK) return 0;
 	return n;
@@ -280,12 +317,20 @@ uint16_t W25Q64_fastread(W25Q64_t * dev, uint32_t addr, uint8_t *buf, uint16_t n
 
 
 //
-// セクタ単位消去(4kb空間単位でデータの消去を行う)
-// sect_no(in) セクタ番号(0 - 2048)
-// flgwait(in) true:処理待ちを行う false:待ち無し
-// 戻り値: true:正常終了 false:失敗
-//	補足： データシートでは消去に通常 30ms 、最大400msかかると記載されている
-//		   アドレス23ビットのうち上位 11ビットがセクタ番号の相当する。下位12ビットはセクタ内アドレスとなる。
+// Erasing data in 4kb space units
+// sect_no(in):Sector number(0 - 2048)
+// flgwait(in):true:Wait for complete / false:No wait for complete
+// Return value: true:success false:fail
+//
+// Note:
+// The data sheet states that erasing usually takes 30ms and up to 400ms.
+// The upper 11 bits of the 23 bits of the address correspond to the sector number.
+// The lower 12 bits are the intra-sectoral address.
+//
+// 補足:
+// データシートでは消去に通常 30ms 、最大400msかかると記載されている
+// アドレス23ビットのうち上位 11ビットがセクタ番号の相当する。
+// 下位12ビットはセクタ内アドレスとなる。
 //
 bool W25Q64_eraseSector(W25Q64_t * dev, uint16_t sect_no, bool flgwait)
 {
@@ -294,7 +339,7 @@ bool W25Q64_eraseSector(W25Q64_t * dev, uint16_t sect_no, bool flgwait)
 	uint32_t addr = sect_no;
 	addr<<=12;
 
-	// 書込み許可設定
+	// Write permission setting
 	esp_err_t ret;
 	ret = W25Q64_WriteEnable(dev);
 	if (ret != ESP_OK) return false;
@@ -311,7 +356,7 @@ bool W25Q64_eraseSector(W25Q64_t * dev, uint16_t sect_no, bool flgwait)
 	assert(ret==ESP_OK);
 	if (ret != ESP_OK) return false;
 
-	// 処理待ち
+	// Busy check
 	while( W25Q64_IsBusy(dev) & flgwait) {
 		vTaskDelay(1);
 	}
@@ -319,12 +364,19 @@ bool W25Q64_eraseSector(W25Q64_t * dev, uint16_t sect_no, bool flgwait)
 }
 
 //
-// 64KBブロック単位消去(64kb空間単位でデータの消去を行う)
-// blk_no(in) ブロック番号(0 - 127)
-// flgwait(in) true:処理待ちを行う false:待ち無し
-// 戻り値: true:正常終了 false:失敗
-//	 補足: データシートでは消去に通常 150ms 、最大1000msかかると記載されている
-//		   アドレス23ビットのうち上位 7ビットがブロックの相当する。下位16ビットはブロック内アドレスとなる。
+// Erasing data in 64kb space units
+// blk_no(in):Block number(0 - 127)
+// flgwait(in):true:Wait for complete / false:No wait for complete
+// Return value: true:success false:fail
+//
+// Note:
+// The data sheet states that erasing usually takes 150ms and up to 1000ms.
+// The upper 7 bits of the 23 bits of the address correspond to the block.
+// The lower 16 bits are the address in the block.
+//
+// 補足:
+// データシートでは消去に通常 150ms 、最大1000msかかると記載されている
+// アドレス23ビットのうち上位 7ビットがブロックの相当する。下位16ビットはブロック内アドレスとなる。
 //
 bool W25Q64_erase64Block(W25Q64_t * dev, uint16_t blk_no, bool flgwait)
 {
@@ -333,7 +385,7 @@ bool W25Q64_erase64Block(W25Q64_t * dev, uint16_t blk_no, bool flgwait)
 	uint32_t addr = blk_no;
 	addr<<=16;
 
-	// 書込み許可設定
+	// Write permission setting
 	esp_err_t ret;
 	ret = W25Q64_WriteEnable(dev);
 	if (ret != ESP_OK) return false;
@@ -350,7 +402,7 @@ bool W25Q64_erase64Block(W25Q64_t * dev, uint16_t blk_no, bool flgwait)
 	assert(ret==ESP_OK);
 	if (ret != ESP_OK) return false;
 
-	// 処理待ち
+	// Busy check
 	while( W25Q64_IsBusy(dev) & flgwait) {
 		vTaskDelay(1);
 	}
@@ -358,12 +410,19 @@ bool W25Q64_erase64Block(W25Q64_t * dev, uint16_t blk_no, bool flgwait)
 }
 
 //
-// 32KBブロック単位消去(32kb空間単位でデータの消去を行う)
-// blk_no(in) ブロック番号(0 - 255)
-// flgwait(in) true:処理待ちを行う false:待ち無し
-// 戻り値: true:正常終了 false:失敗
-//	 補足: データシートでは消去に通常 120ms 、最大800msかかると記載されている
-//		   アドレス23ビットのうち上位 8ビットがブロックの相当する。下位15ビットはブロック内アドレスとなる。
+// Erasing data in 32kb space units
+// blk_no(in):Block number(0 - 255)
+// flgwait(in):true:Wait for complete / false:No wait for complete
+// Return value: true:success false:fail
+//
+// Note:
+// The data sheet states that erasing usually takes 120ms and up to 800ms.
+// The upper 8 bits of the 23 bits of the address correspond to the block.
+// The lower 15 bits are the in-block address.
+//
+// 補足:
+// データシートでは消去に通常 120ms 、最大800msかかると記載されている
+// アドレス23ビットのうち上位 8ビットがブロックの相当する。下位15ビットはブロック内アドレスとなる。
 //
 bool W25Q64_erase32Block(W25Q64_t * dev, uint16_t blk_no, bool flgwait)
 {
@@ -372,7 +431,7 @@ bool W25Q64_erase32Block(W25Q64_t * dev, uint16_t blk_no, bool flgwait)
 	uint32_t addr = blk_no;
 	addr<<=15;
 
-	// 書込み許可設定
+	// Write permission setting
 	esp_err_t ret;
 	ret = W25Q64_WriteEnable(dev);
 	if (ret != ESP_OK) return false;
@@ -389,7 +448,7 @@ bool W25Q64_erase32Block(W25Q64_t * dev, uint16_t blk_no, bool flgwait)
 	assert(ret==ESP_OK);
 	if (ret != ESP_OK) return false;
 
-	// 処理待ち
+	// Busy check
 	while( W25Q64_IsBusy(dev) & flgwait) {
 		vTaskDelay(1);
 	}
@@ -398,17 +457,22 @@ bool W25Q64_erase32Block(W25Q64_t * dev, uint16_t blk_no, bool flgwait)
 
 
 //
-// 全領域の消去
-// flgwait(in) true:処理待ちを行う false:待ち無し
-// 戻り値: true:正常終了 false:失敗
-//	 補足: データシートでは消去に通常 15s 、最大30sかかると記載されている
+// Erase all data
+// flgwait(in):true:Wait for complete / false:No wait for complete
+// Return value: true:success false:fail
+//
+// Note:
+// The data sheet states that erasing usually takes 15s and up to 30s.
+//
+// 補足:
+// データシートでは消去に通常 15s 、最大30sかかると記載されている
 //
 bool W25Q64_eraseAll(W25Q64_t * dev, bool flgwait)
 {
 	spi_transaction_t SPITransaction;
 	uint8_t data[1];
 
-	// 書込み許可設定
+	// Write permission setting
 	esp_err_t ret;
 	ret = W25Q64_WriteEnable(dev);
 	if (ret != ESP_OK) return false;
@@ -422,7 +486,7 @@ bool W25Q64_eraseAll(W25Q64_t * dev, bool flgwait)
 	assert(ret==ESP_OK);
 	if (ret != ESP_OK) return false;
 
-	// 処理待ち
+	// Busy check
 	while( W25Q64_IsBusy(dev) & flgwait) {
 		vTaskDelay(1);
 	}
@@ -430,11 +494,11 @@ bool W25Q64_eraseAll(W25Q64_t * dev, bool flgwait)
 }
 
 //
-// データの書き込み
-// sect_no(in) : セクタ番号(0x00 - 0x7FF) 
-// inaddr(in)  : セクタ内アドレス(0x00-0xFFF)
-// data(in)    : 書込みデータ格納アドレス
-// n(in)	   : 書込みバイト数(0～256)
+// Page write
+// sect_no(in):Sector number(0x00 - 0x7FF) 
+// inaddr(in):In-sector address(0x00-0xFFF)
+// data(in):Write data
+// n(in):Number of bytes to write(0～256)
 //
 int16_t W25Q64_pageWrite(W25Q64_t * dev, uint16_t sect_no, uint16_t inaddr, uint8_t* buf, int16_t n)
 {
@@ -446,12 +510,12 @@ int16_t W25Q64_pageWrite(W25Q64_t * dev, uint16_t sect_no, uint16_t inaddr, uint
 	addr<<=12;
 	addr += inaddr;
 
-	// 書込み許可設定
+	// Write permission setting
 	esp_err_t ret;
 	ret = W25Q64_WriteEnable(dev);
 	if (ret != ESP_OK) return 0;
 
-	// 書込み等の処理中チェック
+	// Busy check
 	if (W25Q64_IsBusy(dev)) return 0;  
 
 	data = (unsigned char*)malloc(n+4);
@@ -469,7 +533,7 @@ int16_t W25Q64_pageWrite(W25Q64_t * dev, uint16_t sect_no, uint16_t inaddr, uint
 	assert(ret==ESP_OK);
 	if (ret != ESP_OK) return 0;
 
-	// 処理待ち
+	// Busy check
 	while( W25Q64_IsBusy(dev) ) {
 		vTaskDelay(1);
 	}

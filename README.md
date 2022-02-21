@@ -52,9 +52,8 @@ You have to set this config value with menuconfig.
 - CONFIG_CS_GPIO   
  GPIO number(IOxx) to CS.
 
-![config-main](https://user-images.githubusercontent.com/6020549/108640422-e47daa00-74dc-11eb-8353-242165cde308.jpg)
-
-![config-esp32](https://user-images.githubusercontent.com/6020549/108640424-e5aed700-74dc-11eb-8c42-096b383f27b9.jpg)
+![config-top](https://user-images.githubusercontent.com/6020549/154919412-282faeda-c748-438f-beac-34b76d318d3b.jpg)
+![config-app-1](https://user-images.githubusercontent.com/6020549/154919431-39deccb4-e71a-4f35-94e2-79800520c580.jpg)
 
 # Wireing
 
@@ -125,7 +124,7 @@ int16_t W25Q64_pageWrite(W25Q64_t * dev, uint16_t sect_no, uint16_t inaddr, uint
 
 
 
-# Winbond
+# WINBOND
 
 |Device|# of Bytes|Address range|# of 4K-Sectors|# of 32K-Blocks|# of 64K-Blocks|JEDEC ID|
 |:---|:---|:---|:---|:---|:---|:---|
@@ -157,7 +156,6 @@ int16_t W25Q64_pageWrite(W25Q64_t * dev, uint16_t sect_no, uint16_t inaddr, uint
 ## W25Q128   
 ![W25Q128](https://user-images.githubusercontent.com/6020549/81382327-2c4b6480-9149-11ea-8b34-dcbd6e43aa37.jpg)
 
----
 
 # MACRONIX   
 
@@ -166,6 +164,7 @@ int16_t W25Q64_pageWrite(W25Q64_t * dev, uint16_t sect_no, uint16_t inaddr, uint
 |MX25L3206E|4M|0x3FFFFF|1024|128|64|C2-20-16|
 |MX25L6473E|8M|0x7FFFFF|2048|256|128|C2-20-17|
 |MX25L12835F|16M|0xFFFFFF|4096|512|256|C2-20-18|
+|MX25L25645G|32M|0x1FFFFFF|8192|1024|512|C2-20-19|
 
 ## MX25L3206E   
 ![MX25L3206E](https://user-images.githubusercontent.com/6020549/84555332-47685000-ad57-11ea-81a1-db88de013da9.jpg)
@@ -181,7 +180,11 @@ int16_t W25Q64_pageWrite(W25Q64_t * dev, uint16_t sect_no, uint16_t inaddr, uint
 ## MX25L12835F   
 ![MX25L12835F](https://user-images.githubusercontent.com/6020549/81383590-353d3580-914b-11ea-913d-ce862c58c36c.jpg)
 
----
+## MX25L25645G   
+__4 byte address mode needs to be enabled.__   
+![config-app-2](https://user-images.githubusercontent.com/6020549/154919488-1cf78201-d5c4-4587-8f54-b2d2e4dab598.jpg)
+![MX25L25645G](https://user-images.githubusercontent.com/6020549/154919275-eadcbf0e-6bea-4bf2-beed-dcce54aef4e3.jpg)
+
 
 # Note   
 I tested these.   

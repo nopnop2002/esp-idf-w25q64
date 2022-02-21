@@ -14,9 +14,9 @@
 #define TAG "W25Q64"
 
 //
-// 書込みデータのダンプリスト
-// dt(in) : データ格納先頭アドレス
-// n(in)  : 表示データ数
+// Data dump list
+// dt(in):Data to dump
+// n(in) :Number of bytes of data
 //
 void dump(uint8_t *dt, int n)
 {
@@ -60,15 +60,11 @@ void dump(uint8_t *dt, int n)
 
 void app_main()
 {
-	ESP_LOGI(TAG, "MISO_GPIO=%d", CONFIG_MISO_GPIO);
-	ESP_LOGI(TAG, "MOSI_GPIO=%d", CONFIG_MOSI_GPIO);
-	ESP_LOGI(TAG, "SCLK_GPIO=%d", CONFIG_SCLK_GPIO);
-	ESP_LOGI(TAG, "CS_GPIO=%d", CONFIG_CS_GPIO);
 	W25Q64_t dev;
-	spi_master_init(&dev, CONFIG_CS_GPIO, CONFIG_MISO_GPIO, CONFIG_MOSI_GPIO, CONFIG_SCLK_GPIO);
+	W25Q64_init(&dev);
 
 	// ステータスレジスタ1の取得
-	// Get fron Status Register1
+	// Get Status Register1
 	uint8_t reg1;
 	esp_err_t ret;
 	ret = W25Q64_readStatusReg1(&dev, &reg1);
@@ -79,7 +75,7 @@ void app_main()
 	ESP_LOGI(TAG, "readStatusReg1 : %x", reg1);
 	
 	// ステータスレジスタ2の取得
-	// Get fron Status Register2
+	// Get Status Register2
 	uint8_t reg2;
 	ret = W25Q64_readStatusReg2(&dev, &reg2);
 	if (ret != ESP_OK) {
