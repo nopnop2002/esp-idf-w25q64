@@ -73,7 +73,7 @@ esp_err_t W25Q64_readManufacturer(W25Q64_t * dev, uint8_t * id);
 bool W25Q64_IsBusy(W25Q64_t * dev);  
 
 // Set power down mode  
-esp_err_t W25Q64_powerDown(W25Q64_t * dev);;  
+esp_err_t W25Q64_powerDown(W25Q64_t * dev);   
 
 // Set write enable  
 esp_err_t W25Q64_WriteEnable(W25Q64_t * dev);  
