@@ -6,37 +6,17 @@ I ported from [here](https://github.com/Tamakichi/Arduino-W25Q64).
 esp-idf v4.4 or later.   
 This is because this version supports ESP32-C3.   
 
-# Installation for ESP32
+# Installation
 
 ```
 git clone https://github.com/nopnop2002/esp-idf-w25q64
 cd esp-idf-w25q64
-idf.py set-target esp32
+idf.py set-target {esp32/esp32s2/esp32c3}
 idf.py menuconfig
 idf.py flash
 ```
 
-# Installation for ESP32-S2
-
-```
-git clone https://github.com/nopnop2002/esp-idf-w25q64
-cd esp-idf-w25q64
-idf.py set-target esp32s2
-idf.py menuconfig
-idf.py flash
-```
-
-# Installation for ESP32-C3
-
-```
-git clone https://github.com/nopnop2002/esp-idf-w25q64
-cd esp-idf-w25q64
-idf.py set-target esp32c3
-idf.py menuconfig
-idf.py flash
-```
-
-__Note__   
+__Note for ESP32C3__   
 For some reason, there are development boards that cannot use GPIO06, GPIO08, GPIO09, GPIO19 for SPI clock pins.   
 According to the ESP32C3 specifications, these pins can also be used as SPI clocks.   
 I used a raw ESP-C3-13 to verify that these pins could be used as SPI clocks.   
