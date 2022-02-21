@@ -3,8 +3,8 @@
 
 #include "driver/spi_master.h"
 
-#define MAX_BLOCKSIZE         128  // Total number of blocks
-#define MAX_SECTORSIZE        2048 // Total number of sectors
+//#define MAX_BLOCKSIZE         128  // Total number of blocks
+//#define MAX_SECTORSIZE        2048 // Total number of sectors
 
 #define CMD_WRITE_ENABLE      0x06
 #define CMD_WRITE_DISABLE     0x04
