@@ -1,10 +1,18 @@
 menu "W25Q64 Configuration"
 
+	config GPIO_RANGE_MAX
+		int
+		default 33 if IDF_TARGET_ESP32
+		default 46 if IDF_TARGET_ESP32S2
+		default 19 if IDF_TARGET_ESP32C3
+		default 48 if IDF_TARGET_ESP32S3
+
 	config MISO_GPIO
 		int "MISO GPIO number"
-		range 0 46
+		range 0 GPIO_RANGE_MAX
 		default 19 if IDF_TARGET_ESP32
-		default 33 if IDF_TARGET_ESP32S2
+		default 37 if IDF_TARGET_ESP32S2
+		default 37 if IDF_TARGET_ESP32S3
 		default 18 if IDF_TARGET_ESP32C3
 		help
 			GPIO number (IOxx) to SPI MISO.
@@ -14,9 +22,10 @@ menu "W25Q64 Configuration"
 
 	config MOSI_GPIO
 		int "MOSI GPIO number"
-		range 0 46
+		range 0 GPIO_RANGE_MAX
 		default 23 if IDF_TARGET_ESP32
 		default 35 if IDF_TARGET_ESP32S2
+		default 35 if IDF_TARGET_ESP32S3
 		default 19 if IDF_TARGET_ESP32C3
 		help
 			GPIO number (IOxx) to SPI MOSI.
@@ -26,9 +35,10 @@ menu "W25Q64 Configuration"
 
 	config SCLK_GPIO
 		int "SCLK GPIO number"
-		range 0 46
+		range 0 GPIO_RANGE_MAX
 		default 18 if IDF_TARGET_ESP32
 		default 36 if IDF_TARGET_ESP32S2
+		default 36 if IDF_TARGET_ESP32S3
 		default 10 if IDF_TARGET_ESP32C3
 		help
 			GPIO number (IOxx) to SPI SCLK.
@@ -38,9 +48,10 @@ menu "W25Q64 Configuration"
 
 	config CS_GPIO
 		int "CS GPIO number"
-		range 0 46
+		range 0 GPIO_RANGE_MAX
 		default 5 if IDF_TARGET_ESP32
 		default 34 if IDF_TARGET_ESP32S2
+		default 34 if IDF_TARGET_ESP32S3
 		default 9  if IDF_TARGET_ESP32C3
 		help
 			GPIO number (IOxx) to SPI CS.
@@ -53,4 +64,19 @@ menu "W25Q64 Configuration"
 		default false
 		help
 			Enable 4-Byte Address Mode.
+
+	choice SPI_HOST
+		prompt "SPI peripheral that controls this bus"
+		default SPI2_HOST
+		help
+			Select SPI peripheral that controls this bus.
+		config SPI2_HOST
+			bool "SPI2_HOST"
+			help
+				Use SPI2_HOST. This is also called HSPI_HOST.
+		config SPI3_HOST
+			bool "SPI3_HOST"
+			help
+				USE SPI3_HOST. This is also called VSPI_HOST
+	endchoice
 endmenu

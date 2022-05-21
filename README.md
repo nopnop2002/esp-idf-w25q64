@@ -11,7 +11,7 @@ This is because this version supports ESP32-C3.
 ```
 git clone https://github.com/nopnop2002/esp-idf-w25q64
 cd esp-idf-w25q64
-idf.py set-target {esp32/esp32s2/esp32c3}
+idf.py set-target {esp32/esp32s2/esp32s3/esp32c3}
 idf.py menuconfig
 idf.py flash
 ```
@@ -33,14 +33,14 @@ You have to set this config value with menuconfig.
  GPIO number(IOxx) to CS.
 
 ![config-top](https://user-images.githubusercontent.com/6020549/154919412-282faeda-c748-438f-beac-34b76d318d3b.jpg)
-![config-app-1](https://user-images.githubusercontent.com/6020549/154919431-39deccb4-e71a-4f35-94e2-79800520c580.jpg)
+![config-w25q64-1](https://user-images.githubusercontent.com/6020549/169672306-c2520c99-35aa-4927-b002-bb9c56a6e0f7.jpg)
 
 # Wireing
 
-|#|W25Q64||ESP32|ESP32-S2|ESP32-C3|
+|#|W25Q64||ESP32|ESP32-S2/S3|ESP32-C3|
 |:-:|:-:|:-:|:-:|:-:|:-:|
 |1|/CS|--|GPIO5|GPIO34|GPIO9|
-|2|MISO|--|GPIO19|GPIO33|GPIO18|
+|2|MISO|--|GPIO19|GPIO37|GPIO18|
 |3|/WP|--|3.3V|3.3V|3.3V|
 |4|GND|--|GND|GND|GND|
 |5|MOSI|--|GPIO23|GPIO35|GPIO19|
@@ -50,6 +50,17 @@ You have to set this config value with menuconfig.
 
 __You can change it to any pin using menuconfig.__   
 __But it may not work with other GPIOs.__
+
+# SPI BUS selection   
+![config-w25q64-3](https://user-images.githubusercontent.com/6020549/169672332-5f3a5358-4f49-4133-86da-8a05ca3c9e5e.jpg)
+
+The ESP32 series has three SPI BUSs.   
+SPI1_HOST is used for communication with Flash memory.   
+You can use SPI2_HOST and SPI3_HOST freely.   
+When you use SDSPI(SD Card via SPI), SDSPI uses SPI2_HOST BUS.   
+When using this module at the same time as SDSPI or other SPI device using SPI2_HOST, it needs to be changed to SPI3_HOST.   
+When you don't use SDSPI, both SPI2_HOST and SPI3_HOST will work.   
+Previously it was called HSPI_HOST / VSPI_HOST, but now it is called SPI2_HOST / SPI3_HOST.   
 
 
 # API
@@ -162,7 +173,7 @@ int16_t W25Q64_pageWrite(W25Q64_t * dev, uint16_t sect_no, uint16_t inaddr, uint
 
 ## MX25L25645G   
 __4 byte address mode needs to be enabled.__   
-![config-app-2](https://user-images.githubusercontent.com/6020549/154919488-1cf78201-d5c4-4587-8f54-b2d2e4dab598.jpg)
+![config-w25q64-2](https://user-images.githubusercontent.com/6020549/169672341-f6619025-c4c6-48b9-bcc5-7ce39ef9a5d1.jpg)
 ![MX25L25645G](https://user-images.githubusercontent.com/6020549/154919275-eadcbf0e-6bea-4bf2-beed-dcce54aef4e3.jpg)
 
 

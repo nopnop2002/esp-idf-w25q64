@@ -12,12 +12,11 @@
 #define TAG	"W25Q64"
 #define _DEBUG_	0
 
-#if CONFIG_IDF_TARGET_ESP32
-#define LCD_HOST	HSPI_HOST
-#elif CONFIG_IDF_TARGET_ESP32S2
-#define LCD_HOST	SPI2_HOST
-#elif defined CONFIG_IDF_TARGET_ESP32C3
-#define LCD_HOST	SPI2_HOST
+// SPI Stuff
+#if CONFIG_SPI2_HOST
+#define HOST_ID SPI2_HOST
+#elif CONFIG_SPI3_HOST
+#define HOST_ID SPI3_HOST
 #endif
 
 //static const int SPI_Command_Mode = 0;
@@ -58,7 +57,7 @@ void W25Q64_init(W25Q64_t * dev)
 		.quadhd_io_num = -1
 	};
 
-	ret = spi_bus_initialize( LCD_HOST, &spi_bus_config, SPI_DMA_CH_AUTO );
+	ret = spi_bus_initialize( HOST_ID, &spi_bus_config, SPI_DMA_CH_AUTO );
 	if(_DEBUG_)ESP_LOGI(TAG, "spi_bus_initialize=%d",ret);
 	assert(ret==ESP_OK);
 
@@ -70,7 +69,7 @@ void W25Q64_init(W25Q64_t * dev)
 	devcfg.mode = 0;
 
 	spi_device_handle_t handle;
-	ret = spi_bus_add_device( LCD_HOST, &devcfg, &handle);
+	ret = spi_bus_add_device( HOST_ID, &devcfg, &handle);
 	if(_DEBUG_)ESP_LOGI(TAG, "spi_bus_add_device=%d",ret);
 	assert(ret==ESP_OK);
 	dev->_SPIHandle = handle;
