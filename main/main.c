@@ -2,7 +2,9 @@
  *
  * This sample code is in the public domain.
  */
+
 #include <stdio.h>
+#include <inttypes.h>
 #include <string.h>
 
 #include "freertos/FreeRTOS.h"
@@ -36,7 +38,7 @@ void dump(uint8_t *dt, int n)
 		data = dt[addr];
 		if (clm == 0) {
 			sum =0;
-			printf("%05x: ",addr);
+			printf("%05"PRIx32": ",addr);
 		}
 
 		sum+=data;
