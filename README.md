@@ -3,7 +3,7 @@ SPI Flash Memory W25Q64 Access Library for esp-idf.
 I ported from [here](https://github.com/Tamakichi/Arduino-W25Q64).   
 
 # Software requirements
-esp-idf v4.4 or later.   
+esp-idf v4.4/v5.0.   
 This is because this version supports ESP32-C3.   
 
 # Installation
