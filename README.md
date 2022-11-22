@@ -35,6 +35,18 @@ You have to set this config value with menuconfig.
 ![config-top](https://user-images.githubusercontent.com/6020549/154919412-282faeda-c748-438f-beac-34b76d318d3b.jpg)
 ![config-w25q64-1](https://user-images.githubusercontent.com/6020549/169672306-c2520c99-35aa-4927-b002-bb9c56a6e0f7.jpg)
 
+# SPI BUS selection   
+![config-w25q64-3](https://user-images.githubusercontent.com/6020549/169672332-5f3a5358-4f49-4133-86da-8a05ca3c9e5e.jpg)
+
+The ESP32 series has three SPI BUSs.   
+SPI1_HOST is used for communication with Flash memory.   
+You can use SPI2_HOST and SPI3_HOST freely.   
+When you use SDSPI(SD Card via SPI), SDSPI uses SPI2_HOST BUS.   
+When using this module at the same time as SDSPI or other SPI device using SPI2_HOST, it needs to be changed to SPI3_HOST.   
+When you don't use SDSPI, both SPI2_HOST and SPI3_HOST will work.   
+Previously it was called HSPI_HOST / VSPI_HOST, but now it is called SPI2_HOST / SPI3_HOST.   
+
+
 # Wireing
 
 |#|W25Q64||ESP32|ESP32-S2/S3|ESP32-C3|
@@ -50,18 +62,6 @@ You have to set this config value with menuconfig.
 
 __You can change it to any pin using menuconfig.__   
 __But it may not work with other GPIOs.__
-
-# SPI BUS selection   
-![config-w25q64-3](https://user-images.githubusercontent.com/6020549/169672332-5f3a5358-4f49-4133-86da-8a05ca3c9e5e.jpg)
-
-The ESP32 series has three SPI BUSs.   
-SPI1_HOST is used for communication with Flash memory.   
-You can use SPI2_HOST and SPI3_HOST freely.   
-When you use SDSPI(SD Card via SPI), SDSPI uses SPI2_HOST BUS.   
-When using this module at the same time as SDSPI or other SPI device using SPI2_HOST, it needs to be changed to SPI3_HOST.   
-When you don't use SDSPI, both SPI2_HOST and SPI3_HOST will work.   
-Previously it was called HSPI_HOST / VSPI_HOST, but now it is called SPI2_HOST / SPI3_HOST.   
-
 
 # API
 
