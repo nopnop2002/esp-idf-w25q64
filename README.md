@@ -3,15 +3,15 @@ SPI Flash Memory W25Q64 Access Library for esp-idf.
 I ported from [here](https://github.com/Tamakichi/Arduino-W25Q64).   
 
 # Software requirements
-esp-idf v4.4/v5.0.   
-This is because this version supports ESP32-C3.   
+ESP-IDF V4.4/V5.0.
+ESP-IDF V5 is required when using ESP32-C2.
 
 # Installation
 
 ```
 git clone https://github.com/nopnop2002/esp-idf-w25q64
 cd esp-idf-w25q64
-idf.py set-target {esp32/esp32s2/esp32s3/esp32c3}
+idf.py set-target {esp32/esp32s2/esp32s3/esp32c2/esp32c3}
 idf.py menuconfig
 idf.py flash
 ```
@@ -51,17 +51,16 @@ Previously it was called HSPI_HOST / VSPI_HOST, but now it is called SPI2_HOST /
 
 |#|W25Q64||ESP32|ESP32-S2/S3|ESP32-C3|
 |:-:|:-:|:-:|:-:|:-:|:-:|
-|1|/CS|--|GPIO5|GPIO34|GPIO9|
-|2|MISO|--|GPIO19|GPIO37|GPIO18|
+|1|/CS|--|GPIO5|GPIO34|GPIO3|
+|2|MISO|--|GPIO19|GPIO37|GPIO0|
 |3|/WP|--|3.3V|3.3V|3.3V|
 |4|GND|--|GND|GND|GND|
-|5|MOSI|--|GPIO23|GPIO35|GPIO19|
-|6|SCK|--|GPIO18|GPIO36|GPIO10|
+|5|MOSI|--|GPIO23|GPIO35|GPIO1|
+|6|SCK|--|GPIO18|GPIO36|GPIO2|
 |7|/HOLD|--|3.3V|3.3V|3.3V|
 |8|VCC|--|3.3V|3.3V|3.3V|
 
 __You can change it to any pin using menuconfig.__   
-__But it may not work with other GPIOs.__
 
 # API
 
@@ -173,7 +172,7 @@ int16_t W25Q64_pageWrite(W25Q64_t * dev, uint16_t sect_no, uint16_t inaddr, uint
 
 ## MX25L25645G   
 __4 byte address mode needs to be enabled.__   
-![config-w25q64-2](https://user-images.githubusercontent.com/6020549/169672341-f6619025-c4c6-48b9-bcc5-7ce39ef9a5d1.jpg)
+![config-w25q64-2](https://user-images.githubusercontent.com/6020549/203889892-52ba6e39-abcf-4f58-bfbf-eb1e4a901c96.jpg)
 ![MX25L25645G](https://user-images.githubusercontent.com/6020549/154919275-eadcbf0e-6bea-4bf2-beed-dcce54aef4e3.jpg)
 
 

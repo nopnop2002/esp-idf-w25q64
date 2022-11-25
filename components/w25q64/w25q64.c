@@ -9,7 +9,7 @@
 
 #include "w25q64.h"
 
-#define TAG	"W25Q64"
+#define TAG "W25Q64"
 #define _DEBUG_	0
 
 // SPI Stuff
