@@ -49,7 +49,7 @@ Previously it was called HSPI_HOST / VSPI_HOST, but now it is called SPI2_HOST /
 
 # Wireing
 
-|#|W25Q64||ESP32|ESP32-S2/S3|ESP32-C3|
+|#|W25Q64||ESP32|ESP32-S2/S3|ESP32-C2/C3|
 |:-:|:-:|:-:|:-:|:-:|:-:|
 |1|/CS|--|GPIO5|GPIO34|GPIO3|
 |2|MISO|--|GPIO19|GPIO37|GPIO0|
