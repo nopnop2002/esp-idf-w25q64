@@ -124,10 +124,10 @@ int16_t W25Q64_pageWrite(W25Q64_t * dev, uint16_t sect_no, uint16_t inaddr, uint
 |W25Q64|8M|0x7FFFFF|2048|256|128|EF-40-17|
 |W25Q128|16M|0xFFFFFF|4096|512|256|EF-40-18|
 
-The letters BV, CV, FV, and JV in the mark after the volume number indicate operating parameters.   
+The letters after the volume number indicate operating parameters.   
 For example W25Q64BV, W25Q64CV, W25Q64FV, W25Q64JV are all the same 8 MB flash drives, but with different maximum frequencies and speeds.   
 In theory you could replace slow with fast, but the other way around might not work.   
-- BV: 80MHz  clock operation   
+- BV: 80MHz clock operation   
 - CV: 104MHz clock operation   
 - FV: 104MHz clock operation   
 - JV: 133MHz clock operation   
@@ -159,12 +159,20 @@ In theory you could replace slow with fast, but the other way around might not w
 
 |Device|# of Bytes|Address range|# of 4K-Sectors|# of 32K-Blocks|# of 64K-Blocks|JEDEC ID|
 |:---|:---|:---|:---|:---|:---|:---|
-|MX25L3206E|4M|0x3FFFFF|1024|128|64|C2-20-16|
-|MX25L6473E|8M|0x7FFFFF|2048|256|128|C2-20-17|
-|MX25L12835F|16M|0xFFFFFF|4096|512|256|C2-20-18|
-|MX25L25645G|32M|0x1FFFFFF|8192|1024|512|C2-20-19|
+|MX25L32|4M|0x3FFFFF|1024|128|64|C2-20-16|
+|MX25L64|8M|0x7FFFFF|2048|256|128|C2-20-17|
+|MX25L128|16M|0xFFFFFF|4096|512|256|C2-20-18|
+|MX25L256|32M|0x1FFFFFF|8192|1024|512|C2-20-19|
 
-## MX25L3206E   
+The letters after the volume number indicate operating parameters.   
+For example, MX25L3205, MX25L3205A, MX25L3205D, MX25L3206E are all the same 8 MB flash drives, but with different maximum frequencies and speeds.   
+In theory you could replace slow with fast, but the other way around might not work.   
+- MX25L3205 50MHz serial clock   
+- MX25L3205A 50MHz serial clock   
+- MX25L3205D 86MHz serial clock   
+- MX25L3206E 86MHz serial clock   
+
+## MX25L32   
 ![MX25L3206E](https://user-images.githubusercontent.com/6020549/84555332-47685000-ad57-11ea-81a1-db88de013da9.jpg)
 
 - Manufacturer:  
@@ -172,13 +180,13 @@ In theory you could replace slow with fast, but the other way around might not w
  Byte2 : MemoryType(0x20)  
  Byte3 : Capacity(2^0x16=2^22=0x400000=4M Byte=32M Bit)  
 
-## MX25L6473E   
+## MX25L64   
 ![MX25L6473E](https://user-images.githubusercontent.com/6020549/81383580-32dadb80-914b-11ea-823b-6487b7a7e073.jpg)
 
-## MX25L12835F   
+## MX25L128   
 ![MX25L12835F](https://user-images.githubusercontent.com/6020549/81383590-353d3580-914b-11ea-913d-ce862c58c36c.jpg)
 
-## MX25L25645G   
+## MX25L256   
 __4 byte address mode needs to be enabled.__   
 ![config-w25q64-2](https://user-images.githubusercontent.com/6020549/203889892-52ba6e39-abcf-4f58-bfbf-eb1e4a901c96.jpg)
 ![MX25L25645G](https://user-images.githubusercontent.com/6020549/154919275-eadcbf0e-6bea-4bf2-beed-dcce54aef4e3.jpg)
