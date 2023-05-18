@@ -136,7 +136,7 @@ In theory you could replace slow with fast, but the other way around might not w
 ![W25Q80](https://user-images.githubusercontent.com/6020549/81382267-1342b380-9149-11ea-88bc-bc7cd07501a4.jpg)
 
 - Manufacturer:  
- Byte1 : ManufacturerID(0xef=Winbond)  
+ Byte1 : ManufacturerID(0xEF=Winbond)  
  Byte2 : MemoryType(0x40=SPI/0x60=QPI)  
  Byte3 : Capacity(2^0x14=2^20=0x100000=1M Byte=8M Bit)  
 - First 10Byte : ASCII 0-9  
@@ -176,7 +176,7 @@ In theory you could replace slow with fast, but the other way around might not w
 ![MX25L3206E](https://user-images.githubusercontent.com/6020549/84555332-47685000-ad57-11ea-81a1-db88de013da9.jpg)
 
 - Manufacturer:  
- Byte1 : ManufacturerID(0xc2=Macronix)  
+ Byte1 : ManufacturerID(0xC2=Macronix)  
  Byte2 : MemoryType(0x20)  
  Byte3 : Capacity(2^0x16=2^22=0x400000=4M Byte=32M Bit)  
 
