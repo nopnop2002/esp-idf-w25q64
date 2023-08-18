@@ -163,7 +163,7 @@ In theory you could replace slow with fast, but the other way around might not w
 |MX25L32|4M|0x3FFFFF|1024|128|64|C2-20-16|
 |MX25L64|8M|0x7FFFFF|2048|256|128|C2-20-17|
 |MX25L128|16M|0xFFFFFF|4096|512|256|C2-20-18|
-|MX25L256|32M|0x1FFFFFF|8192|1024|512|C2-20-19|
+|MX25L256|32M|0x1FFFFFF(*1)|8192|1024|512|C2-20-19|
 
 The letters after the volume number indicate operating parameters.   
 For example, MX25L3205, MX25L3205A, MX25L3205D, MX25L3206E are all the same 4 MB flash drives, but with different maximum frequencies and speeds.   
@@ -172,6 +172,8 @@ In theory you could replace slow with fast, but the other way around might not w
 - MX25L3205A 50MHz serial clock   
 - MX25L3205D 86MHz serial clock   
 - MX25L3206E 86MHz serial clock   
+
+(*1) __Using 4 byte address mode.__   
 
 ## MX25L32   
 ![MX25L3206E](https://user-images.githubusercontent.com/6020549/84555332-47685000-ad57-11ea-81a1-db88de013da9.jpg)
