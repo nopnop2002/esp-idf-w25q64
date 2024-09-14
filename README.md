@@ -125,7 +125,7 @@ int16_t W25Q64_pageWrite(W25Q64_t * dev, uint16_t sect_no, uint16_t inaddr, uint
 |W25Q64|8M|0x7FFFFF|2048|256|128|EF-40-17|
 |W25Q128|16M|0xFFFFFF|4096|512|256|EF-40-18|
 
-The letters after the volume number indicate operating parameters.   
+The last two characters of the product name indicate operating parameters.   
 For example W25Q64BV, W25Q64CV, W25Q64FV, W25Q64JV are all the same 8 MB flash drives, but with different maximum frequencies and speeds.   
 In theory you could replace slow with fast, but the other way around might not work.   
 - BV: 80MHz clock operation   
