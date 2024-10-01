@@ -202,7 +202,7 @@ But I couldn't get it working.
 - SST25VF016B   
 - SST25VF032B   
 
-# Note   
+# FAT FS on External Flash   
 There is a example to build a FAT file system on External SPI FLASH Memory is available [here](https://github.com/espressif/esp-idf/tree/master/examples/storage/ext_flash_fatfs).   
 The ESP32's onboard FLASH is 4MByte, and you can reserve up to about 3MByte of storage on the onboard FLASH.   
 With the large capacity SPI FLASH Memory, you can add a large amount of storage.   
