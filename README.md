@@ -207,3 +207,29 @@ There is a example to build a FAT file system on External SPI FLASH Memory is av
 The ESP32's onboard FLASH is 4MByte, and you can reserve up to about 3MByte of storage on the onboard FLASH.   
 With the large capacity SPI FLASH Memory, you can add a large amount of storage.   
 You can access FLASH memory using C standard library functions such as fopen/fread/fwrite/fclose.   
+
+# How to use this component in your project   
+Create idf_component.yml in the same directory as main.c.   
+```
+YourProject --+-- CMakeLists.txt
+              +-- main --+-- main.c
+                         +-- CMakeLists.txt
+                         +-- idf_component.yml
+```
+
+Contents of idf_component.yml.
+```
+dependencies:
+  nopnop2002/w25q64:
+    path: components/w25q64/
+    git: https://github.com/nopnop2002/esp-idf-w25q64.git
+```
+
+When you build a projects esp-idf will automaticly fetch repository to managed_components dir and link with your code.   
+```
+YourProject --+-- CMakeLists.txt
+              +-- main --+-- main.c
+              |          +-- CMakeLists.txt
+              |          +-- idf_component.yml
+              +-- managed_components ----- nopnop2002__w25q64
+```
