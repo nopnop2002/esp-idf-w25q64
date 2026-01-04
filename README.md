@@ -3,8 +3,8 @@ SPI Flash Memory W25Q64 Access Library for esp-idf.
 I ported from [here](https://github.com/Tamakichi/Arduino-W25Q64).   
 
 # Software requirements
-ESP-IDF V4.4/V5.x.   
-ESP-IDF V5.0 is required when using ESP32-C2.   
+ESP-IDF V5.0 or later.   
+ESP-IDF V4.4 release branch reached EOL in July 2024.   
 ESP-IDF V5.1 is required when using ESP32-C6.   
 
 # Installation
