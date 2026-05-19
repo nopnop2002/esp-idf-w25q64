@@ -12,7 +12,6 @@ ESP-IDF V5.1 is required when using ESP32-C6.
 ```
 git clone https://github.com/nopnop2002/esp-idf-w25q64
 cd esp-idf-w25q64
-idf.py set-target {esp32/esp32s2/esp32s3/esp32c2/esp32c3/esp32c6}
 idf.py menuconfig
 idf.py flash
 ```
@@ -50,7 +49,7 @@ Previously it was called HSPI_HOST / VSPI_HOST, but now it is called SPI2_HOST /
 
 # Wireing
 
-|#|W25Q64||ESP32|ESP32-S2/S3|ESP32-C2/C3/C6|
+|#|W25Q64||ESP32|ESP32-S2/S3|ESP32-Cx/Hx|
 |:-:|:-:|:-:|:-:|:-:|:-:|
 |1|/CS|--|GPIO5|GPIO34|GPIO3|
 |2|MISO|--|GPIO19|GPIO37|GPIO0|
