@@ -50,7 +50,7 @@ menu "W25Q64 Configuration"
 
 	config 4B_MODE
 		bool "Enable 4-Byte Address Mode"
-		default false
+		default n
 		help
 			Enable 4-Byte Address Mode.
 
